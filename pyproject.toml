@@ -1,0 +1,50 @@
+[project]
+name = "influenza-antigenic-causal-study"
+version = "1.0.0"
+description = "Reproducible research notebook: causal + interpretable (B-spline KAN) modeling of influenza HI antigenic distance across three datasets."
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+license = { text = "CC0-1.0" }
+authors = [{ name = "Influenza HI Antigenic Distance Study" }]
+keywords = ["influenza", "antigenic-distance", "causal-discovery", "kolmogorov-arnold-network", "hemagglutinin"]
+
+dependencies = [
+    "numpy==1.26.4",
+    "pandas==2.3.3",
+    "scipy==1.17.1",
+    "scikit-learn==1.9.0",
+    "xgboost==3.2.0",
+    "statsmodels==0.14.6",
+    "causal-learn==0.1.4.7",
+    "torch==2.13.0",
+    "matplotlib==3.11.0",
+    "seaborn==0.13.2",
+    "networkx==3.6.1",
+    "jupyter==1.1.1",
+    "nbconvert==7.17.1",
+    "ipykernel==6.29.5",
+]
+
+[dependency-groups]
+# Lightweight blog-export + test deps: no torch/GPU/science stack needed to render
+# the already-executed notebook into the markdown+media blog contract.
+dev = [
+    "pytest>=8.0",
+    "nbconvert>=7.16.6",
+    "nbformat",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+# export_blog.py lives at the repo root; make it importable from tests/.
+pythonpath = ["."]
+testpaths = ["tests"]

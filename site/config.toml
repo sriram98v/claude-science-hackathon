@@ -1,0 +1,20 @@
+# Zola configuration for the antigenic-distance blog.
+#
+# The site is built entirely from blog/content.md + blog/media/ (materialised into
+# content/ and static/media/ by assemble_site.py). It never reads the notebook.
+# Served as a GitHub project page from the `web` branch.
+base_url = "https://sriram98v.github.io/claude-science-hackathon"
+title = "Causal and Interpretable Modeling of Influenza Antigenic Distance"
+
+compile_sass = false
+build_search_index = false
+generate_feeds = false
+# Media table fragments are raw HTML; don't let Zola rewrite/insert anchors into them.
+minify_html = false
+
+[markdown]
+# The reader/article JS assigns heading ids; Zola's own insertion is unnecessary.
+insert_anchor_links = "none"
+
+[extra]
+subtitle = "Separating the hemagglutinin positions that causally drive antigenic escape from the linked positions that merely ride along with them — across three hemagglutination-inhibition datasets, with an interpretable B-spline Kolmogorov–Arnold Network for prediction."

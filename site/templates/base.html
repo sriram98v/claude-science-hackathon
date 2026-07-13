@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ config.title }}</title>
+<script>
+  /* Set theme before first paint to avoid a flash of the wrong palette. */
+  (function () {
+    try {
+      var t = localStorage.getItem("blog-theme");
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="{{ get_url(path='css/reader.css') }}">
+{% block head_extra %}{% endblock head_extra %}
+</head>
+<body>
+  <div class="topbar"><div class="inner">
+    <div class="grp">
+      <button class="iconbtn" id="toc-toggle" aria-label="Toggle contents" title="Contents">&#9776;</button>
+      <a class="home" href="https://sriram98v.github.io">Home</a>
+    </div>
+    <div class="grp">
+      {% block viewlink %}{% endblock viewlink %}
+      <button class="iconbtn" id="export-pdf" aria-label="Export as PDF" title="Export as PDF (single column)">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 0h5l3 3v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V1a1 1 0 0 1 1-1zm4.5 1.5V4H11L8.5 1.5zM5 8h6v1H5V8zm0 2h6v1H5v-1zm0 2h4v1H5v-1z"/></svg>
+      </button>
+      <a class="iconbtn" href="https://github.com/sriram98v/claude-science-hackathon" aria-label="GitHub repository" title="GitHub repository"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+      <button class="iconbtn" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+    </div>
+  </div></div>
+
+  <div class="reader">
+    <nav id="toc" aria-label="Contents">
+      <p class="toc-head">Contents</p>
+      <div id="toc-list"></div>
+    </nav>
+
+    <div id="col-text">
+      <div class="col-inner">
+        <header class="masthead">
+          <p class="eyebrow">Built with Claude &mdash; Life Sciences</p>
+          <h1>{{ config.title }}</h1>
+          <p class="sub">{{ config.extra.subtitle }}</p>
+          <a class="repo-btn" href="https://github.com/sriram98v/claude-science-hackathon">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            View on GitHub
+          </a>
+        </header>
+
+        <div class="text-body">
+{% block content %}{% endblock content %}
+        </div>
+
+        <footer class="site"><div class="inner">
+          <span class="badge">Built with Claude &mdash; Life Sciences</span><br>
+          Created with Claude Science for the
+          <a href="https://cerebralvalley.ai/e/built-with-claude-life-sciences">Built with Claude: Life Sciences</a>
+          hackathon. Code &amp; data released under CC0-1.0.
+          &nbsp;&middot;&nbsp; <a href="{{ get_url(path='full.html') }}">View the full executed notebook (with code) &rarr;</a>
+        </div></footer>
+      </div>
+    </div>
+
+    <div id="col-media" aria-label="Figures and tables"></div>
+  </div>
+
+  <button id="scroll-top" aria-label="Scroll to top" title="Scroll to top">&#8593;</button>
+
+  <div id="lightbox" aria-hidden="true"><img alt="Enlarged figure"></div>
+
+  {% block scripts %}{% endblock scripts %}
+</body>
+</html>

@@ -1,0 +1,4 @@
+<span class="media-anchor" data-media="{{ n }}" id="anchor-{{ n }}"></span>
+<div class="media-block" id="media-{{ n }}">
+{{ load_data(path='static/media/' ~ src, format='plain') | safe }}
+</div>

@@ -1,0 +1,4 @@
+dataset,n,n_features,univ_sig_FDR05,univ_best_singleR2,LASSO_testR2,LASSO_nonzero,Ridge_testR2,XGB_testR2,XGB_best_iter
+vhid_HA1,2751,329,78,0.443,0.766,100,0.764,0.85,539
+H3N2,7808,329,185,0.205,0.528,118,0.529,0.634,533
+H1N1,913,327,56,0.167,0.499,70,0.488,0.574,129

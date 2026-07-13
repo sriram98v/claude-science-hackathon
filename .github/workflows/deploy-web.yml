@@ -1,0 +1,58 @@
+name: Deploy web
+
+# Action B of the two-stage blog pipeline.
+#
+# Builds the Zola site purely from the portable contract (blog/content.md + blog/media/
+# + blog/full.html) and publishes the static output to the `web` branch, which is the
+# GitHub Pages source. Reads no notebook and no science env -- only assemble_site.py
+# (stdlib) + zola. Triggered by Action A after it regenerates blog content, on direct
+# edits to blog/ or site/, or manually.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - blog/content.md
+      - blog/media/**
+      - blog/full.html
+      - site/**
+      - assemble_site.py
+      - .github/workflows/deploy-web.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write   # push built site to the web branch
+
+concurrency:
+  group: deploy-web
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Zola
+        uses: taiki-e/install-action@v2
+        with:
+          tool: zola@0.22.1
+
+      - name: Assemble site inputs from blog/ (md + media only)
+        run: python assemble_site.py
+
+      - name: Build site
+        run: zola build
+        working-directory: site
+
+      - name: Publish to web branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site/public
+          publish_branch: web
+          force_orphan: true

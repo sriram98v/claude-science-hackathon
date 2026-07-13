@@ -1,0 +1,4 @@
+method,threshold,ci_test,alpha,titer_adjacency,titer_parents_caveated,n_adjacent,wall_seconds
+FCI_fisherz_screened,0.8,fisherz,0.01,pos_133;pos_156;pos_189;pos_190;pos_278;pos_289,pos_189;pos_190;pos_278,6,12.2
+PC_fisherz_screened,0.8,fisherz,0.01,pos_133;pos_156;pos_189;pos_190;pos_278;pos_289,pos_156;pos_189;pos_190;pos_278;pos_289,6,6.1
+BOSS_BIC_screened,0.8,BIC_score,,pos_53;pos_62;pos_83;pos_94;pos_135;pos_155;pos_156;pos_158;pos_164;pos_189;pos_190;pos_226;pos_278;pos_289;pos_310,pos_53;pos_62;pos_83;pos_94;pos_135;pos_155;pos_156;pos_158;pos_164;pos_189;pos_190;pos_226;pos_278;pos_310,15,47.9

@@ -1,0 +1,15 @@
+/* Article view: single column at every width. Neutralizes the reader's wide
+   three-column grid and keeps the TOC as a slide-in overlay throughout. Load AFTER
+   reader.css. */
+@media (min-width: 1400px) {
+  .reader { display: block; height: 100%; overflow-y: auto; }
+  #col-text { overflow: visible; height: auto; }
+  #col-media { display: none; }
+  #toc {
+    position: fixed; top: var(--topbar-h); left: 0; bottom: 0; width: 264px; z-index: 30;
+    border-right: 1px solid var(--line); overflow-y: auto; opacity: 1; padding: 22px 18px;
+    transform: translateX(-100%); transition: transform .22s ease;
+  }
+  body.toc-open #toc { transform: translateX(0); box-shadow: 0 0 32px rgba(0,0,0,.22); }
+}
+.media-block img { cursor: zoom-in; }   /* zoomable at all widths */

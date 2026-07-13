@@ -1,0 +1,4 @@
+dataset,position,block_size,n_used,subsampled,p_fisherz,p_kci,nonlinear_flag,kan_spline_curvature
+H3N2,165,1,1000,True,4.138965463562627e-05,1.151610058658381e-05,False,0.0465
+H3N2,169,1,1000,True,0.20669942680262432,0.0004251926355476332,True,0.0746
+vhid_HA1,276,3,1000,True,4.440892098500626e-16,3.7477343450831313e-10,False,0.0637
