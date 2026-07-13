@@ -61,4 +61,4 @@ Key modeling premise that shapes the code: because the HI target is a graph sink
 
 ## Conventions
 
-Determinism matters: a fixed `SEED = 0` is threaded through benchmarks, CV, and bootstraps — preserve seeding when adding routines. Power filtering drops positions with minor-class count `< MIN_MINOR` (30). License is CC0-1.0 (code and data).
+Determinism matters: a fixed `SEED = 0` is threaded through benchmarks, CV, and bootstraps — preserve seeding when adding routines. Power filtering drops positions with minor-class count `< MIN_MINOR` (30). Code is licensed under MIT (see `LICENSE`); the raw HI dataset is CC-BY-4.0 (archived on Zenodo).

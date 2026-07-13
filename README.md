@@ -170,5 +170,5 @@ skill.
 
 ## License
 
-Code released CC0-1.0. The raw HI dataset is archived on Zenodo
-(<https://zenodo.org/records/21339272>) under CC-BY-4.0.
+Code released under the MIT License (see [LICENSE](LICENSE)). The raw HI dataset is
+archived on Zenodo (<https://zenodo.org/records/21339272>) under CC-BY-4.0.
