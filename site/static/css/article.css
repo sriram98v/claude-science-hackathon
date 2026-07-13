@@ -1,15 +1,11 @@
-/* Article view: single column at every width. Neutralizes the reader's wide
-   three-column grid and keeps the TOC as a slide-in overlay throughout. Load AFTER
-   reader.css. */
+/* Article view: a single text column plus the same persistent Contents panel the
+   two-column reader shows on wide screens -- just without the right-hand media column.
+   Media stays inline at its anchor. Load AFTER reader.css, whose @1400 block already
+   supplies the grid, the persistent #toc styling, and the collapse behavior; here we
+   only narrow it from three columns to two and drop the media column. */
 @media (min-width: 1400px) {
-  .reader { display: block; height: 100%; overflow-y: auto; }
-  #col-text { overflow: visible; height: auto; }
-  #col-media { display: none; }
-  #toc {
-    position: fixed; top: var(--topbar-h); left: 0; bottom: 0; width: 264px; z-index: 30;
-    border-right: 1px solid var(--line); overflow-y: auto; opacity: 1; padding: 22px 18px;
-    transform: translateX(-100%); transition: transform .22s ease;
-  }
-  body.toc-open #toc { transform: translateX(0); box-shadow: 0 0 32px rgba(0,0,0,.22); }
+  .reader { grid-template-columns: 248px minmax(0, 1fr); }
+  body.toc-collapsed .reader { grid-template-columns: 0 minmax(0, 1fr); }
+  #col-media { display: none; }          /* no media column in single-column mode */
 }
 .media-block img { cursor: zoom-in; }   /* zoomable at all widths */
