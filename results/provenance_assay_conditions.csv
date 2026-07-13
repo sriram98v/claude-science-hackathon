@@ -1,0 +1,13 @@
+,VHID H3N2,Bedford H3N2
+dataset_key,vhid_HA1,H3N2
+data_source,VHID_DPCIPI_2020,Bedford_2014_H3N2
+citation,DPCIPI: Pre-trained deep learning model (arXiv:2302.00926),Bedford et al. (2014) eLife. github.com/trvrb/flux
+subtype,H3N2,H3N2
+n_pairs,2751,7808
+n_unique_viruses,246,304
+n_unique_reference_strains,45,191
+virus_accession,2751/2751,7808/7808
+ref_accession,2751/2751,7808/7808
+collection_year,0/2751,7808/7808
+rbc_species,absent,absent
+sera_type,absent,absent

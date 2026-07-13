@@ -1,4 +1,0 @@
-User-agent: *
-Disallow:
-Allow: /
-Sitemap: https://sriram98v.github.io/claude-science-hackathon/sitemap.xml

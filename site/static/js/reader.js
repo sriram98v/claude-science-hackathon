@@ -45,14 +45,16 @@
 
   /* ---- build the index panel ---- */
   var list = document.getElementById("toc-list");
-  var heads = textBody ? Array.prototype.slice.call(textBody.querySelectorAll("h2, h3")) : [];
+  var heads = textBody ? Array.prototype.slice.call(textBody.querySelectorAll("h1, h2")) : [];
+  /* the first h1 is the article title itself, not an index entry */
+  if (heads.length && heads[0].tagName.toLowerCase() === "h1") heads.shift();
   var tocById = {};
   heads.forEach(function (h) {
-    if (!h.id) h.id = h.textContent.trim().replace(/\s+/g, "-");
+    h.id = h.textContent.replace(/¶/g, "").trim().replace(/\s+/g, "-");
     var a = document.createElement("a");
     a.href = "#" + h.id;
     a.textContent = h.textContent.replace(/¶/g, "").trim();
-    a.className = h.tagName.toLowerCase() === "h3" ? "toc-sub" : "toc-top";
+    a.className = h.tagName.toLowerCase() === "h2" ? "toc-sub" : "toc-top";
     a.dataset.target = h.id;
     list.appendChild(a);
     tocById[h.id] = a;

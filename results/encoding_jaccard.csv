@@ -1,0 +1,5 @@
+dataset,pair,jaccard,encodings
+VHID_H3N2,binary~grantham,0.571,binary/grantham/L2
+VHID_H3N2,binary~L2property,0.5,binary/grantham/L2
+VHID_H3N2,grantham~L2property,0.625,binary/grantham/L2
+Bedford_H3N2,binary~grantham,0.308,binary/grantham

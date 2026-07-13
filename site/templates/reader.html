@@ -4,6 +4,6 @@
 <a class="textbtn" href="{{ get_url(path='@/article.md') }}" title="Single-column article">Single column</a>
 {% endblock viewlink %}
 
-{% block content %}{{ section.content | safe }}{% endblock content %}
+{% block content %}{{ page.content | safe }}{% endblock content %}
 
 {% block scripts %}<script src="{{ get_url(path='js/reader.js') }}"></script>{% endblock scripts %}

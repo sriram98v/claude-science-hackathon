@@ -11,12 +11,12 @@ _Step 4 of the flu-HI antigenic workflow. Tests 1-3 establish *not inconsistent*
 - B = 200 resamples
 - top group inclusion frequencies:
   - `G168 -> titer` : 1.00
-  - `G200 -> titer` : 1.00
+  - `G288 -> titer` : 1.00
+  - `G203 -> titer` : 1.00
+  - `G143 -> titer` : 1.00
   - `G199 -> titer` : 1.00
   - `G11 -> titer` : 1.00
-  - `G288 -> titer` : 1.00
-  - `G143 -> titer` : 1.00
-  - `G203 -> titer` : 1.00
+  - `G200 -> titer` : 1.00
   - `G167 -> titer` : 0.96
 - _Read stability at the linkage-GROUP level; raw linked columns dilute each other._
 

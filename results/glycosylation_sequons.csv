@@ -1,0 +1,9 @@
+panel,driver_mature,residue,in_sequon,role_at_driver,local_3mer
+VHID H3N2,144,V,False,—,VNS
+VHID H3N2,156,K,False,—,KSE
+VHID H3N2,189,S,False,—,SEQ
+Bedford H3N2,133,N,True,N (sequon root),NGT
+Bedford H3N2,158,K,False,—,KFK
+Bedford H3N2,189,N,False,—,NDQ
+Bedford H3N2,157,L,False,—,LKF
+Bedford H3N2,193,S,False,—,SLY

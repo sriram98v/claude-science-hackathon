@@ -3,7 +3,7 @@
 {% block head_extra %}<link rel="stylesheet" href="{{ get_url(path='css/article.css') }}">{% endblock head_extra %}
 
 {% block viewlink %}
-<a class="textbtn" href="{{ get_url(path='/') }}" title="Two-column reader">Two column</a>
+<a class="textbtn" href="{{ get_url(path='@/blog.md') }}" title="Two-column reader">Two column</a>
 {% endblock viewlink %}
 
 {% block content %}{{ page.content | safe }}{% endblock content %}

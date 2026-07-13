@@ -6,3 +6,8 @@ __pycache__/
 # Raw dataset (download via ./download_data.sh). No trailing slash so a
 # symlink to an external copy is ignored too, not just a real directory.
 influenza-hi-antigenic-distance
+
+# Built Zola output. main holds source only; CI publishes this to the `web` branch.
+site/public/
+# Unserved duplicate of the presentation deck (canonical copy: site/static/index.html).
+/presentation/

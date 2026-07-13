@@ -10,10 +10,10 @@ _Step 4 of the flu-HI antigenic workflow. Tests 1-3 establish *not inconsistent*
 ## 2. Bootstrap structural stability
 - B = 200 resamples
 - top group inclusion frequencies:
-  - `G144 -> titer` : 1.00
-  - `G189 -> titer` : 1.00
-  - `G156 -> titer` : 1.00
   - `G158 -> titer` : 1.00
+  - `G156 -> titer` : 1.00
+  - `G189 -> titer` : 1.00
+  - `G144 -> titer` : 1.00
   - `G289 -> titer` : 0.99
 - _Read stability at the linkage-GROUP level; raw linked columns dilute each other._
 

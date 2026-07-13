@@ -13,14 +13,34 @@ still one source of truth. Both CI (deploy-web) and local verification call this
 run `zola build` in site/. Run:  python assemble_site.py
 """
 import os
+import re
 import shutil
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 BLOG = os.path.join(HERE, "blog")
 SITE = os.path.join(HERE, "site")
 
-READER_FM = "+++\ntemplate = \"reader.html\"\n+++\n\n"
+# The root section renders nothing (render = false) so the hand-maintained
+# presentation deck at site/static/index.html is what Zola leaves at "/".  The blog
+# body lives at two page routes instead: /blog/ (two-column reader) and /article/
+# (single column). Both carry the same body; the deck's "Skip to blog" / final CTA
+# point at /blog/.
+INDEX_FM = "+++\nrender = false\n+++\n"
+BLOG_FM = "+++\ntitle = \"Article\"\npath = \"blog\"\ntemplate = \"reader.html\"\n+++\n\n"
 ARTICLE_FM = "+++\ntitle = \"Article\"\npath = \"article\"\ntemplate = \"article.html\"\n+++\n\n"
+
+# In-page section cross-references, e.g. [3.1](#3.1-Predictive-benchmark). Their
+# fragments follow the reader/article JS anchor scheme (heading text, whitespace
+# -> "-", punctuation/case kept), which no Zola slugify mode reproduces, so Zola's
+# build-time anchor check would reject them as markdown links. Emit them as raw
+# HTML <a> instead: Zola passes raw HTML through unchecked, and the JS assigns
+# matching heading ids at runtime. (Fragments encode "(" / ")" as %28/%29, so the
+# link destination never contains a literal ")".)
+_ANCHOR_LINK = re.compile(r"\[([^\]]+)\]\(#([^)]+)\)")
+
+
+def inline_anchor_links(body: str) -> str:
+    return _ANCHOR_LINK.sub(r'<a href="#\2">\1</a>', body)
 
 
 def main():
@@ -32,7 +52,7 @@ def main():
             raise SystemExit(f"missing blog input: {p} -- run export_blog.py first")
 
     with open(content_md, encoding="utf-8") as f:
-        body = f.read()
+        body = inline_anchor_links(f.read())
 
     # static/media (mirror, replacing any stale copy)
     media_dst = os.path.join(SITE, "static", "media")
@@ -49,12 +69,14 @@ def main():
     content_dir = os.path.join(SITE, "content")
     os.makedirs(content_dir, exist_ok=True)
     with open(os.path.join(content_dir, "_index.md"), "w", encoding="utf-8") as f:
-        f.write(READER_FM + body)
+        f.write(INDEX_FM)
+    with open(os.path.join(content_dir, "blog.md"), "w", encoding="utf-8") as f:
+        f.write(BLOG_FM + body)
     with open(os.path.join(content_dir, "article.md"), "w", encoding="utf-8") as f:
         f.write(ARTICLE_FM + body)
 
     n_media = sum(len(files) for _, _, files in os.walk(media_dst))
-    print(f"[assemble_site] wrote site/content/_index.md + article.md, "
+    print(f"[assemble_site] wrote site/content/_index.md (render=false) + blog.md + article.md, "
           f"site/static/media ({n_media} files), site/static/full.html")
 
 

@@ -1,3 +1,3 @@
 dataset,screen_k,n_kci_rows,seconds,status,n_fisherz,n_kci,fisherz_parents,kci_parents,only_under_kci,only_under_fisherz
-vhid_HA1,25,1000,180.1,killed (> 180s — KCI-PC intractable at this scale),4,,pos144;pos156;pos158;pos189,,,
-H3N2,25,1000,180.1,killed (> 180s — KCI-PC intractable at this scale),7,,pos11;pos143;pos167;pos168;pos199;pos200;pos288,,,
+vhid_HA1,25,1000,180.2,killed (> 180s — KCI-PC intractable at this scale),4,,pos144;pos156;pos158;pos189,,,
+H3N2,25,1000,180.2,killed (> 180s — KCI-PC intractable at this scale),7,,pos11;pos143;pos167;pos168;pos199;pos200;pos288,,,

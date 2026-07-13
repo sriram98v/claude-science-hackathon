@@ -20,8 +20,8 @@ NOTEBOOK = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 
 # The executed notebook currently ships exactly this many figure (image/png) outputs
 # and this many media-producing code cells; the exporter turns them into the blog.
-EXPECTED_FIGURES = 9
-EXPECTED_MEDIA_CELLS = 24   # cells with >=1 rich output (before SKIP_NEVER_FOCUSED)
+EXPECTED_FIGURES = 21
+EXPECTED_MEDIA_CELLS = 36   # cells with >=1 rich output (before SKIP_NEVER_FOCUSED)
 
 
 @pytest.fixture(scope="module")

@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700');
+/* Dark Botanical fonts — applied only under [data-theme="dark"] (see block below). */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root {
   --navy:   #1a222c;
@@ -11,12 +13,14 @@
   --topbar-h: 52px;
 }
 :root[data-theme="dark"] {
-  --accent: #8b89f0;
-  --head:   #e6edf3;
-  --body:   #b3bcc7;
-  --line:   #2a323d;
-  --bg:     #0f1419;
-  --soft:   #161c24;
+  /* Dark Botanical palette (matches the slide deck). */
+  --navy:   #221b14;                    /* topbar / table headers / badge — warm charcoal */
+  --accent: #d8a24a;                    /* gold */
+  --head:   #f3ece1;                    /* ivory */
+  --body:   #b0a48f;                    /* muted */
+  --line:   rgba(243, 236, 225, 0.14);  /* faint ivory rule */
+  --bg:     #0e0c0b;                    /* near-black, warm */
+  --soft:   #16110d;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -29,6 +33,17 @@ body {
 }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
+
+/* ---------- smooth light/dark theme cross-fade ----------
+   Universal rule kept at zero specificity (plain `*`) so every element-specific
+   transition below (button hovers, TOC grid collapse, lightbox, etc.) still wins;
+   only the token-driven colors animate when [data-theme] flips. */
+*, *::before, *::after {
+  transition: background-color .3s ease, border-color .3s ease, color .3s ease, fill .3s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none; }
+}
 
 /* ---------- top bar ---------- */
 .topbar { flex: 0 0 var(--topbar-h); background: var(--navy); color: #fff; z-index: 40; }
@@ -128,11 +143,22 @@ header.masthead p.sub { margin: 0 auto 22px; color: var(--body); font-size: 1.04
 .repo-btn {
   display: inline-flex; align-items: center; gap: 8px;
   background: var(--accent); color: #fff; font-weight: 600; font-size: .95rem;
-  padding: 11px 20px; border-radius: 8px; transition: background .15s;
+  padding: 11px 20px; border-radius: 8px; transition: background .15s, color .3s ease;
 }
 .repo-btn:hover { background: #4442c4; text-decoration: none; }
-:root[data-theme="dark"] .repo-btn:hover { background: #6e6cdf; }
+:root[data-theme="dark"] .repo-btn:hover { background: #e6b463; }
 .repo-btn svg { width: 18px; height: 18px; fill: currentColor; }
+/* primary (GitHub) + secondary (Slides) buttons sit side by side, centered */
+.cta-row { display: inline-flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: center; }
+.slides-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--accent); border: 1.5px solid var(--accent);
+  font-weight: 600; font-size: .95rem; padding: 10px 20px; border-radius: 8px;
+  transition: background .15s, color .15s, border-color .3s ease;
+}
+.slides-btn:hover { background: var(--accent); color: #fff; text-decoration: none; }
+:root[data-theme="dark"] .slides-btn:hover { color: #1a1410; }   /* dark ink on gold fill */
+.slides-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
 .text-body { padding-top: 22px; text-align: left; }
 .text-body h1, .text-body h2, .text-body h3, .text-body h4 {
@@ -206,11 +232,11 @@ footer.site .badge {
   background: var(--accent); color: #fff; font-size: 1.3rem; cursor: pointer;
   box-shadow: 0 3px 14px rgba(0,0,0,.25);
   opacity: 0; visibility: hidden; transform: translateY(8px);
-  transition: opacity .2s ease, transform .2s ease, visibility .2s;
+  transition: opacity .2s ease, transform .2s ease, visibility .2s, background-color .3s ease, color .3s ease;
 }
 #scroll-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
 #scroll-top:hover { background: #4442c4; }
-:root[data-theme="dark"] #scroll-top:hover { background: #6e6cdf; }
+:root[data-theme="dark"] #scroll-top:hover { background: #e6b463; }
 
 /* ---------- image zoom (single-column mode) ---------- */
 @media (max-width: 1399px) { .media-block img { cursor: zoom-in; } }
@@ -228,6 +254,29 @@ footer.site .badge {
   transform: scale(.82); transition: transform .28s cubic-bezier(.2,.7,.3,1);
 }
 #lightbox.open img { transform: scale(1); }
+
+/* ---------- Dark Botanical: typography + control overrides (dark mode only) ----------
+   Placed last (before print) so it wins ordering over the earlier button rules.
+   Light mode is intentionally untouched. */
+:root[data-theme="dark"] body { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+:root[data-theme="dark"] header.masthead h1,
+:root[data-theme="dark"] .text-body h1,
+:root[data-theme="dark"] .text-body h2,
+:root[data-theme="dark"] .text-body h3,
+:root[data-theme="dark"] .text-body h4 {
+  font-family: 'Cormorant', Georgia, serif; font-weight: 600; letter-spacing: .01em;
+}
+:root[data-theme="dark"] header.masthead h1 { font-size: 2.35rem; }   /* serif reads smaller — nudge the title up */
+:root[data-theme="dark"] .text-body h1 { font-size: 1.95rem; }
+:root[data-theme="dark"] .text-body h2 { font-size: 1.6rem; }
+:root[data-theme="dark"] .text-body h3 { font-size: 1.28rem; }
+:root[data-theme="dark"] .eyebrow,
+:root[data-theme="dark"] #toc .toc-head { font-family: 'IBM Plex Mono', monospace; letter-spacing: .18em; }
+/* Gold buttons need dark ink, not white, for legibility. */
+:root[data-theme="dark"] .repo-btn,
+:root[data-theme="dark"] #scroll-top { color: #1a1410; }
+/* Keep the topbar home-link hover on-palette (was periwinkle). */
+:root[data-theme="dark"] .topbar a.home:hover { color: #e6b463; }
 
 /* ---------- print / PDF export: single-column, LNCS-like ---------- */
 @page { size: A4; margin: 2cm; }
@@ -247,7 +296,7 @@ footer.site .badge {
   /* LNCS-style title block + headings (serif, bold, numbered) */
   header.masthead { border: none; padding: 0 0 6pt; }
   header.masthead .eyebrow { display: none; }
-  header.masthead .repo-btn { display: none; }
+  header.masthead .repo-btn, header.masthead .slides-btn { display: none; }
   header.masthead h1 { font-family: "Times New Roman", Times, serif; font-size: 15pt; margin: 0 0 6pt; }
   header.masthead p.sub { font-size: 10pt; font-style: italic; color: #000; max-width: none; }
   .text-body { padding-top: 8pt; }

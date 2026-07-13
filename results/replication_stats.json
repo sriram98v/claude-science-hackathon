@@ -1,0 +1,114 @@
+{
+  "description": "Cross-dataset structure replication (VHID H3N2 n=2751 vs Bedford H3N2 n=7808), common mature H3 numbering (VHID col=mature offset 0; Bedford mature=col-10 for col>=18).",
+  "numbering_convention": {
+    "vhid_HA1": "alignment column = mature (offset 0)",
+    "H3N2_bedford": "mature = alignment column - 10 for columns >= 18"
+  },
+  "permutation_null": {
+    "n_perm": 20000,
+    "method": "same-size sets drawn without replacement from each dataset node_set (mapped to mature); recompute cross-dataset Jaccard; p=(#null>=obs+1)/(B+1)",
+    "seed": 20260713
+  },
+  "sets": {
+    "pc": {
+      "vhid_mature": [
+        144,
+        156,
+        158,
+        189,
+        289
+      ],
+      "bedford_mature": [
+        11,
+        78,
+        133,
+        157,
+        158,
+        189,
+        190,
+        193,
+        278
+      ],
+      "n_vhid": 5,
+      "n_bedford": 9,
+      "intersection": [
+        158,
+        189
+      ],
+      "n_intersection": 2,
+      "observed_jaccard": 0.16666666666666666,
+      "null_mean": 0.034971515151515156,
+      "null_median": 0.0,
+      "null_p95": 0.16666666666666666,
+      "null_max": 0.4,
+      "p_value": 0.061946902654867256,
+      "n_perm": 20000
+    },
+    "ges": {
+      "vhid_mature": [
+        50,
+        133,
+        144,
+        145,
+        262,
+        276
+      ],
+      "bedford_mature": [
+        83,
+        133,
+        157,
+        158,
+        172,
+        197,
+        276
+      ],
+      "n_vhid": 6,
+      "n_bedford": 7,
+      "intersection": [
+        133,
+        276
+      ],
+      "n_intersection": 2,
+      "observed_jaccard": 0.18181818181818182,
+      "null_mean": 0.034680025252525254,
+      "null_median": 0.0,
+      "null_p95": 0.18181818181818182,
+      "null_max": 0.4444444444444444,
+      "p_value": 0.0511974401279936,
+      "n_perm": 20000
+    },
+    "boot": {
+      "vhid_mature": [
+        144,
+        156,
+        158,
+        189,
+        289
+      ],
+      "bedford_mature": [
+        11,
+        133,
+        157,
+        158,
+        189,
+        190,
+        193,
+        278
+      ],
+      "n_vhid": 5,
+      "n_bedford": 8,
+      "intersection": [
+        158,
+        189
+      ],
+      "n_intersection": 2,
+      "observed_jaccard": 0.18181818181818182,
+      "null_mean": 0.03370775252525253,
+      "null_median": 0.0,
+      "null_p95": 0.08333333333333333,
+      "null_max": 0.4444444444444444,
+      "p_value": 0.04744762761861907,
+      "n_perm": 20000
+    }
+  }
+}
