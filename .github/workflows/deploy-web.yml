@@ -1,27 +1,30 @@
-name: Deploy web
+name: Build and deploy blog
 
-# Action B of the two-stage blog pipeline.
+# Single-stage pipeline. Builds the Zola site straight from the executed notebook and
+# publishes the static output to the `web` branch (the GitHub Pages source).
 #
-# Builds the Zola site purely from the portable contract (blog/content.md + blog/media/
-# + blog/full.html) and publishes the static output to the `web` branch, which is the
-# GitHub Pages source. Reads no notebook and no science env -- only assemble_site.py
-# (stdlib) + zola. Triggered by Action A after it regenerates blog content, on direct
-# edits to blog/ or site/, or manually.
+# It commits NOTHING back to main: blog/ (the portable contract) is regenerated in the
+# workspace during the run and consumed in-place, so main stays strictly human-authored
+# and CI never causes main to diverge from your local. The committed blog/ in main is a
+# convenience snapshot only -- CI does not read or rewrite it.
+#
+# Needs both the slim render deps (nbconvert/nbformat, to read the executed notebook) and
+# zola (to build). No GPU / torch / science env -- the notebook ships executed.
 
 on:
   push:
     branches: [main]
     paths:
-      - blog/content.md
-      - blog/media/**
-      - blog/full.html
-      - site/**
+      - antigenic_study.ipynb
+      - export_blog.py
       - assemble_site.py
+      - tests/test_notebook_outputs.py
+      - site/**
       - .github/workflows/deploy-web.yml
   workflow_dispatch:
 
 permissions:
-  contents: write   # push built site to the web branch
+  contents: write   # push the built site to the web branch
 
 concurrency:
   group: deploy-web
@@ -37,10 +40,22 @@ jobs:
         with:
           python-version: "3.11"
 
+      # Slim render/test deps only -- nbconvert 7.16.6+ required for mistune 3.1+.
+      - name: Install export/test dependencies
+        run: python -m pip install --upgrade "nbconvert>=7.16.6" nbformat pytest
+
       - name: Install Zola
         uses: taiki-e/install-action@v2
         with:
           tool: zola@0.22.1
+
+      # Gate: fail loudly if any notebook cell emitted nothing / an error, so the built
+      # blog can't silently lose a figure or table.
+      - name: Test gate -- every notebook cell produced output
+        run: python -m pytest tests/test_notebook_outputs.py -q
+
+      - name: Regenerate the blog contract from the notebook
+        run: python export_blog.py
 
       - name: Assemble site inputs from blog/ (md + media only)
         run: python assemble_site.py
