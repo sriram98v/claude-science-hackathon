@@ -82,6 +82,12 @@ a:hover { text-decoration: underline; }
   .textbtn svg   { width: 17px; height: 17px; }
 }
 
+/* The two-column reader only lays out at >=1400px; below that both views render
+   as a single column, so the whole view-toggle is meaningless -- hide it. */
+@media (max-width: 1399px) {
+  .textbtn--wideonly { display: none; }
+}
+
 /* ---------- reader (three columns) ---------- */
 .reader { flex: 1 1 auto; min-height: 0; }
 /* same-page anchor jumps (TOC + in-prose section links) animate on every scroll
