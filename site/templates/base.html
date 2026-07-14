@@ -79,5 +79,20 @@
   <div id="lightbox" aria-hidden="true"><img alt="Enlarged figure"></div>
 
   {% block scripts %}{% endblock scripts %}
+
+  <!-- MathJax renders the article's TeX ($…$ inline, $$…$$ display). It loads async,
+       AFTER the per-page script above has already assigned heading ids from the raw
+       heading text, so the "$R^2$" heading keeps its id and cross-reference anchors. -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>

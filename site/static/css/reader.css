@@ -124,7 +124,31 @@ a:hover { text-decoration: underline; }
   border-left: 2px solid transparent;
 }
 #toc a:hover { background: var(--soft); text-decoration: none; }
-#toc a.toc-sub { padding-left: 22px; font-size: .82rem; opacity: .9; }
+/* ---- collapsible Contents tree (h2 -> h3 -> h4) ---- */
+#toc .toc-row { display: flex; align-items: center; }
+#toc .toc-link { flex: 1 1 auto; min-width: 0; margin: 0; }   /* the <a>; inherits #toc a styling */
+#toc .toc-children { padding-left: 13px; }                    /* one indent step per nesting level */
+#toc .toc-item.collapsed > .toc-children { display: none; }
+#toc .toc-item.toc-lvl2 { margin-top: 6px; }
+#toc-list > .toc-item.toc-lvl2:first-child { margin-top: 0; }
+#toc a.toc-h2 { font-weight: 600; color: var(--head); }
+#toc a.toc-h3 { font-size: .82rem; }
+#toc a.toc-h4 { font-size: .78rem; opacity: .82; }
+/* caret: right-pointing triangle that rotates down when the node is expanded */
+#toc .toc-toggle {
+  flex: 0 0 15px; width: 15px; height: 22px; padding: 0; margin: 0;
+  border: 0; background: none; cursor: pointer; color: var(--body);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+#toc .toc-toggle::before {
+  content: ""; width: 0; height: 0;
+  border-left: 4px solid currentColor;
+  border-top: 3.5px solid transparent; border-bottom: 3.5px solid transparent;
+  transition: transform .15s ease;
+}
+#toc .toc-item:not(.collapsed) > .toc-row > .toc-toggle::before { transform: rotate(90deg); }
+#toc .toc-toggle:hover { color: var(--accent); }
+#toc .toc-item.toc-leaf > .toc-row > .toc-toggle { visibility: hidden; }
 #toc a.active {
   color: var(--accent); font-weight: 600;
   border-left-color: var(--accent); background: var(--soft);
@@ -193,6 +217,8 @@ header.masthead p.sub { margin: 0 auto 22px; color: var(--body); font-size: 1.04
 }
 .anchor-link { display: none; }
 .media-anchor { display: block; height: 0; margin: 0; }
+/* a wide display equation scrolls within its own box, never the whole page */
+mjx-container[display="true"] { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
 
 /* ---------- media (figures + tables) ---------- */
 #col-media { padding: 26px 30px; }

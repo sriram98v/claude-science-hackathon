@@ -14,22 +14,65 @@
 
   /* ---- build the index panel ---- */
   var list = document.getElementById("toc-list");
-  var heads = textBody ? Array.prototype.slice.call(textBody.querySelectorAll("h1, h2")) : [];
+  var heads = textBody ? Array.prototype.slice.call(textBody.querySelectorAll("h1, h2, h3, h4")) : [];
   /* the first h1 is the article title itself, not an index entry */
   if (heads.length && heads[0].tagName.toLowerCase() === "h1") heads.shift();
   var tocById = {};
+  /* Build a collapsible tree: h2 sections hold h3 subsections hold h4 items. A caret on
+     any node with children toggles its subtree; the label itself still navigates (native
+     anchor jump). */
+  var tocStack = [{ level: 1, container: list }];
   heads.forEach(function (h) {
     h.id = h.textContent.replace(/¶/g, "").trim().replace(/\s+/g, "-");
+    var level = parseInt(h.tagName.substring(1), 10);   // 2, 3, 4
+    while (tocStack.length > 1 && tocStack[tocStack.length - 1].level >= level) tocStack.pop();
+    var parentBox = tocStack[tocStack.length - 1].container;
+
+    var item = document.createElement("div");
+    item.className = "toc-item toc-lvl" + level;
+    var row = document.createElement("div");
+    row.className = "toc-row";
+    var toggle = document.createElement("button");
+    toggle.className = "toc-toggle";
+    toggle.setAttribute("aria-label", "Collapse");
+    toggle.setAttribute("aria-expanded", "true");
     var a = document.createElement("a");
     a.href = "#" + h.id;
     a.textContent = h.textContent.replace(/¶/g, "").trim();
-    a.className = h.tagName.toLowerCase() === "h2" ? "toc-sub" : "toc-top";
-    list.appendChild(a);
+    a.className = "toc-link toc-h" + level;
+    row.appendChild(toggle);
+    row.appendChild(a);
+    item.appendChild(row);
+    var kids = document.createElement("div");
+    kids.className = "toc-children";
+    item.appendChild(kids);
+    parentBox.appendChild(item);
+
     tocById[h.id] = a;
     a.addEventListener("click", function () {
       /* only the overlay needs dismissing; the wide panel stays put */
       if (!wide.matches) document.body.classList.remove("toc-open");
     });
+    toggle.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var collapsed = item.classList.toggle("collapsed");
+      toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      toggle.setAttribute("aria-label", collapsed ? "Expand" : "Collapse");
+    });
+
+    tocStack.push({ level: level, container: kids });
+  });
+  /* leaves drop their caret (kept as blank space); parents start collapsed */
+  Array.prototype.forEach.call(list.querySelectorAll(".toc-item"), function (it) {
+    var box = it.querySelector(":scope > .toc-children");
+    if (!box || box.children.length === 0) {
+      it.classList.add("toc-leaf");
+    } else {
+      it.classList.add("collapsed");
+      var tg = it.querySelector(":scope > .toc-row > .toc-toggle");
+      if (tg) { tg.setAttribute("aria-expanded", "false"); tg.setAttribute("aria-label", "Expand"); }
+    }
   });
 
   /* ---- index highlight, rooted on the active scroll container ---- */
