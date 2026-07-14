@@ -65,7 +65,14 @@ After establishing baseline performance metrics in <a href="#Predictive-Benchmar
 
 ### Predictive Benchmark
 
-To establish performance baselines and characterize the mathematical properties of the antigenic signal, we evaluated the held-out test $R^2$ (20% split) for the top-performing single-position (max univariate $R^2$), [LASSO](https://en.wikipedia.org/wiki/Lasso_(statistics)), [Ridge](https://en.wikipedia.org/wiki/Ridge_regression), and [XGBoost](https://en.wikipedia.org/wiki/XGBoost) models. The predictive performance across both datasets consistently follows the ordering $\text{XGBoost} \gtrsim \text{LASSO} \approx \text{Ridge} \gg \text{Best Single Position}$.
+To establish performance baselines and characterize the mathematical properties of the antigenic signal, we evaluated the held-out test $R^2$ (20% split) for the top-performing single-position (max univariate $R^2$), [LASSO](https://en.wikipedia.org/wiki/Lasso_(statistics)), [Ridge](https://en.wikipedia.org/wiki/Ridge_regression), and [XGBoost](https://en.wikipedia.org/wiki/XGBoost) models. The predictive performance across both datasets consistently follows the ordering:
+
+$$
+\begin{aligned}
+&\text{XGBoost} \gtrsim \text{LASSO} \approx \text{Ridge} \\\\
+&\qquad \gg \text{Best Single Position}.
+\end{aligned}
+$$
 
 {{ table(src="tables/table-03.html", n=3) }}
 

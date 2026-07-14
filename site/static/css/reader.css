@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700');
-/* Dark Botanical fonts — applied only under [data-theme="dark"] (see block below). */
+/* Botanical fonts (Cormorant display serif + IBM Plex Sans/Mono) — shared by both themes,
+   so a light/dark toggle changes only colors, never the typography. */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root {
@@ -25,7 +25,7 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
   color: var(--body); background: var(--bg);
   line-height: 1.6; font-size: 16px;
   height: 100vh; overflow: hidden;
@@ -39,7 +39,7 @@ a:hover { text-decoration: underline; }
    transition below (button hovers, TOC grid collapse, lightbox, etc.) still wins;
    only the token-driven colors animate when [data-theme] flips. */
 *, *::before, *::after {
-  transition: background-color .3s ease, border-color .3s ease, color .3s ease, fill .3s ease;
+  transition: background-color .5s ease, border-color .5s ease, color .5s ease, fill .5s ease;
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none; }
@@ -97,7 +97,7 @@ a:hover { text-decoration: underline; }
   body.toc-collapsed .reader {
     grid-template-columns: 0 minmax(440px, 0.82fr) minmax(0, 1.18fr);
   }
-  #toc, #col-text, #col-media { height: 100%; overflow-y: auto; }
+  #toc, #col-text, #col-media { height: 100%; overflow-y: auto; overflow-x: hidden; }
   #col-media { display: block; position: relative; overflow-x: hidden; border-left: 1px solid var(--line); }
   #toc {
     min-width: 0; border-right: 1px solid var(--line); overflow-x: hidden;
@@ -109,7 +109,7 @@ a:hover { text-decoration: underline; }
   }
 }
 @media (max-width: 1399px) {
-  .reader { height: 100%; overflow-y: auto; }
+  .reader { height: 100%; overflow-y: auto; overflow-x: hidden; }
   #col-text { overflow: visible; height: auto; }
   #col-media { display: none; }        /* media stays inline in the text on narrow */
 }
@@ -117,7 +117,8 @@ a:hover { text-decoration: underline; }
 /* ---------- index panel ---------- */
 #toc { background: var(--bg); padding: 22px 18px; }
 #toc .toc-head {
-  text-transform: uppercase; letter-spacing: .08em; font-size: .72rem;
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase; letter-spacing: .18em; font-size: .72rem;
   font-weight: 700; color: var(--accent); margin: 0 0 12px;
 }
 #toc a {
@@ -169,12 +170,14 @@ a:hover { text-decoration: underline; }
 .col-inner { max-width: 720px; margin: 0 auto; padding: 0 30px 8px; }
 header.masthead { text-align: center; padding: 44px 0 30px; border-bottom: 1px solid var(--line); }
 .eyebrow {
-  text-transform: uppercase; letter-spacing: .09em; font-size: .72rem;
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase; letter-spacing: .18em; font-size: .72rem;
   font-weight: 700; color: var(--accent); margin: 0 0 12px;
 }
 header.masthead h1 {
   margin: 0 0 12px; color: var(--head);
-  font-size: 2rem; line-height: 1.2; font-weight: 700; letter-spacing: -.01em;
+  font-family: 'Cormorant', Georgia, serif;
+  font-size: 2.35rem; line-height: 1.2; font-weight: 600; letter-spacing: .01em;
 }
 header.masthead p.sub { margin: 0 auto 22px; color: var(--body); font-size: 1.04rem; max-width: 620px; }
 .repo-btn {
@@ -199,12 +202,13 @@ header.masthead p.sub { margin: 0 auto 22px; color: var(--body); font-size: 1.04
 
 .text-body { padding-top: 22px; text-align: left; }
 .text-body h1, .text-body h2, .text-body h3, .text-body h4 {
-  color: var(--head); font-weight: 700; line-height: 1.25;
+  font-family: 'Cormorant', Georgia, serif;
+  color: var(--head); font-weight: 600; line-height: 1.25; letter-spacing: .01em;
   margin: 1.6em 0 .5em; scroll-margin-top: 16px;
 }
-.text-body h1 { font-size: 1.7rem; }
-.text-body h2 { font-size: 1.42rem; padding-top: .5em; border-top: 1px solid var(--line); }
-.text-body h3 { font-size: 1.16rem; }
+.text-body h1 { font-size: 1.95rem; }
+.text-body h2 { font-size: 1.6rem; padding-top: .5em; border-top: 1px solid var(--line); }
+.text-body h3 { font-size: 1.28rem; }
 .text-body h4 { font-size: 1rem; }
 .text-body p { margin: 0 0 1em; text-align: justify; }
 .text-body ul, .text-body ol { padding-left: 1.6rem; margin: 0 0 1em; text-align: left; }
@@ -294,23 +298,9 @@ footer.site .badge {
 }
 #lightbox.open img { transform: scale(1); }
 
-/* ---------- Dark Botanical: typography + control overrides (dark mode only) ----------
-   Placed last (before print) so it wins ordering over the earlier button rules.
-   Light mode is intentionally untouched. */
-:root[data-theme="dark"] body { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
-:root[data-theme="dark"] header.masthead h1,
-:root[data-theme="dark"] .text-body h1,
-:root[data-theme="dark"] .text-body h2,
-:root[data-theme="dark"] .text-body h3,
-:root[data-theme="dark"] .text-body h4 {
-  font-family: 'Cormorant', Georgia, serif; font-weight: 600; letter-spacing: .01em;
-}
-:root[data-theme="dark"] header.masthead h1 { font-size: 2.35rem; }   /* serif reads smaller — nudge the title up */
-:root[data-theme="dark"] .text-body h1 { font-size: 1.95rem; }
-:root[data-theme="dark"] .text-body h2 { font-size: 1.6rem; }
-:root[data-theme="dark"] .text-body h3 { font-size: 1.28rem; }
-:root[data-theme="dark"] .eyebrow,
-:root[data-theme="dark"] #toc .toc-head { font-family: 'IBM Plex Mono', monospace; letter-spacing: .18em; }
+/* ---------- Dark-mode control color overrides ----------
+   Typography (Cormorant + IBM Plex) is shared by both themes above, so switching theme is
+   a pure color cross-fade with no font swap or reflow. Only colors differ per theme. */
 /* Gold buttons need dark ink, not white, for legibility. */
 :root[data-theme="dark"] .repo-btn,
 :root[data-theme="dark"] #scroll-top { color: #1a1410; }
