@@ -3,7 +3,10 @@
 {% block head_extra %}<link rel="stylesheet" href="{{ get_url(path='css/article.css') }}">{% endblock head_extra %}
 
 {% block viewlink %}
-<a class="textbtn" href="{{ get_url(path='@/blog.md') }}" title="Two-column reader">Two column</a>
+<a class="textbtn" href="{{ get_url(path='@/blog.md') }}" aria-label="Two-column reader" title="Two-column reader">
+  <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.2" y="2.8" width="5" height="10.4" rx="1.1"/><rect x="8.8" y="2.8" width="5" height="10.4" rx="1.1"/></svg>
+  <span class="btn-label">Two column</span>
+</a>
 {% endblock viewlink %}
 
 {% block content %}{{ page.content | safe }}{% endblock content %}

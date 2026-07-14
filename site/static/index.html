@@ -20,7 +20,7 @@
 
   .slide {
     width: 100vw; height: 100vh; height: 100dvh;
-    overflow: hidden; scroll-snap-align: start;
+    overflow: hidden; scroll-snap-align: start; scroll-snap-stop: always;
     display: flex; flex-direction: column; position: relative;
   }
   .slide-content {
@@ -157,6 +157,15 @@
     .cols-3, .cols-2 { grid-template-columns: 1fr; }
   }
   @media (max-width: 720px) { .nav-dots { display: none; } }
+  /* portrait phones: give figure slides room — smaller plate, trimmed caption. */
+  @media (max-width: 640px) and (orientation: portrait) {
+    :root { --plate-h: 42vh; }
+    .fig { gap: 0.5rem; }
+    .cap {
+      font-size: 0.68rem; max-width: 100%;
+      display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden;
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
     html { scroll-behavior: auto; } .reveal { opacity: 1; transform: none; }
@@ -497,7 +506,7 @@
     const pnCur = document.getElementById("pn-cur");
     document.getElementById("pn-tot").textContent = slides.length;
 
-    let current = 0, locked = false;
+    let current = 0;
 
     slides.forEach((_, i) => {
       const b = document.createElement("button");
@@ -537,21 +546,9 @@
       else if (ev.key === "End") { ev.preventDefault(); goTo(slides.length - 1); }
     });
 
-    window.addEventListener("wheel", (ev) => {
-      if (locked || Math.abs(ev.deltaY) < 18) return;
-      locked = true;
-      goTo(current + (ev.deltaY > 0 ? 1 : -1));
-      setTimeout(() => (locked = false), 750);
-    }, { passive: true });
-
-    let touchY = null;
-    window.addEventListener("touchstart", (e) => (touchY = e.touches[0].clientY), { passive: true });
-    window.addEventListener("touchend", (e) => {
-      if (touchY === null) return;
-      const dy = touchY - e.changedTouches[0].clientY;
-      if (Math.abs(dy) > 45) goTo(current + (dy > 0 ? 1 : -1));
-      touchY = null;
-    }, { passive: true });
+    /* Wheel + touch are handled natively by CSS scroll-snap (see `scroll-snap-type`
+       + `scroll-snap-stop`), which is smoother than a JS-hijacked scroll and can't
+       fight the browser. JS only drives keyboard shortcuts and the nav dots. */
 
     slides[0].classList.add("active");
     setActive(0);

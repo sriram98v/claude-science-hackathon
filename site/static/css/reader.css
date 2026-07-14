@@ -71,6 +71,17 @@ a:hover { text-decoration: underline; }
 .textbtn:hover { background: rgba(255,255,255,.12); text-decoration: none; }
 .textbtn svg { width: 15px; height: 15px; fill: currentColor; }
 
+/* narrow phones: keep the top bar to one clean row of 34px icon buttons.
+   The view-toggle collapses to its icon; Home moves into the hamburger menu. */
+@media (max-width: 700px) {
+  .topbar .inner { padding: 0 10px; gap: 8px; }
+  .topbar .grp   { gap: 8px; }
+  .topbar a.home { display: none; }
+  .textbtn       { width: 34px; padding: 0; gap: 0; justify-content: center; }
+  .textbtn .btn-label { display: none; }
+  .textbtn svg   { width: 17px; height: 17px; }
+}
+
 /* ---------- reader (three columns) ---------- */
 .reader { flex: 1 1 auto; min-height: 0; }
 #toc, #col-text, #col-media { scroll-behavior: smooth; }

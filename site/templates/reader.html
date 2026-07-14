@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
 {% block viewlink %}
-<a class="textbtn" href="{{ get_url(path='@/article.md') }}" title="Single-column article">Single column</a>
+<a class="textbtn" href="{{ get_url(path='@/article.md') }}" aria-label="Single-column article" title="Single-column article">
+  <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="3" width="11" height="1.7" rx=".85"/><rect x="2.5" y="7.15" width="11" height="1.7" rx=".85"/><rect x="2.5" y="11.3" width="7.5" height="1.7" rx=".85"/></svg>
+  <span class="btn-label">Single column</span>
+</a>
 {% endblock viewlink %}
 
 {% block content %}{{ page.content | safe }}{% endblock content %}
