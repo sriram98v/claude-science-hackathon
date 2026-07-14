@@ -11,3 +11,4 @@ influenza-hi-antigenic-distance
 site/public/
 # Unserved duplicate of the presentation deck (canonical copy: site/static/index.html).
 /presentation/
+/narration
