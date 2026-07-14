@@ -80,6 +80,22 @@
 
   {% block scripts %}{% endblock scripts %}
 
+  <!-- Links to a different host open in a new tab; internal nav (get_url renders it as an
+       absolute same-host URL) and #anchors stay in the current tab. -->
+  <script>
+    (function () {
+      document.querySelectorAll('a[href]').forEach(function (a) {
+        try {
+          var u = new URL(a.href, location.href);
+          if (u.host && u.host !== location.host) {
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+          }
+        } catch (e) {}
+      });
+    })();
+  </script>
+
   <!-- MathJax renders the article's TeX ($…$ inline, $$…$$ display). It loads async,
        AFTER the per-page script above has already assigned heading ids from the raw
        heading text, so the "$R^2$" heading keeps its id and cross-reference anchors. -->

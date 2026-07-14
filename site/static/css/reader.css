@@ -84,7 +84,9 @@ a:hover { text-decoration: underline; }
 
 /* ---------- reader (three columns) ---------- */
 .reader { flex: 1 1 auto; min-height: 0; }
-#toc, #col-text, #col-media { scroll-behavior: smooth; }
+/* same-page anchor jumps (TOC + in-prose section links) animate on every scroll
+   container: .reader scrolls below 1400px and on the article page, the others on wide. */
+.reader, #toc, #col-text, #col-media { scroll-behavior: smooth; }
 
 @media (min-width: 1400px) {
   .reader {

@@ -141,6 +141,12 @@ def export_full(nb):
     exporter = HTMLExporter(template_name="lab")
     exporter.embed_images = True
     html, _ = exporter.from_notebook_node(nb)
+    # External links (a different host) open in a new tab; internal anchors stay put.
+    inject = ('<script>document.querySelectorAll("a[href]").forEach(function(a){'
+              'try{var u=new URL(a.href,location.href);'
+              'if(u.host&&u.host!==location.host){a.target="_blank";'
+              'a.rel="noopener noreferrer";}}catch(e){}});</script>')
+    html = html.replace("</body>", inject + "</body>", 1) if "</body>" in html else html + inject
     with open(os.path.join(BLOG, "full.html"), "w", encoding="utf-8") as f:
         f.write(html)
 
