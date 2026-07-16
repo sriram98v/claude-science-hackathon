@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Causal and Interpretable Modeling of Influenza Antigenic Distance</title>
+<script>
+  /* Set theme before first paint to avoid a flash of the wrong palette. */
+  (function () {
+    try {
+      var t = localStorage.getItem("blog-theme");
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="https://sriram98v.github.io/claude-science-hackathon/css/reader.css">
+
+</head>
+<body>
+  <div class="topbar"><div class="inner">
+    <div class="grp">
+      <button class="iconbtn" id="toc-toggle" aria-label="Toggle contents" title="Contents">&#9776;</button>
+      <a class="home" href="https://sriram98v.github.io">Home</a>
+    </div>
+    <div class="grp">
+      
+<a class="textbtn textbtn--wideonly" href="https://sriram98v.github.io/claude-science-hackathon/article/" aria-label="Single-column article" title="Single-column article">
+  <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="3" width="11" height="1.7" rx=".85"/><rect x="2.5" y="7.15" width="11" height="1.7" rx=".85"/><rect x="2.5" y="11.3" width="7.5" height="1.7" rx=".85"/></svg>
+  <span class="btn-label">Single column</span>
+</a>
+
+      <button class="iconbtn" id="export-pdf" aria-label="Export as PDF" title="Export as PDF (single column)">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 0h5l3 3v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V1a1 1 0 0 1 1-1zm4.5 1.5V4H11L8.5 1.5zM5 8h6v1H5V8zm0 2h6v1H5v-1zm0 2h4v1H5v-1z"/></svg>
+      </button>
+      <a class="iconbtn" href="https://github.com/sriram98v/claude-science-hackathon" aria-label="GitHub repository" title="GitHub repository"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+      <button class="iconbtn" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+    </div>
+  </div></div>
+
+  <div class="reader">
+    <nav id="toc" aria-label="Contents">
+      <p class="toc-head">Contents</p>
+      <div id="toc-list"></div>
+    </nav>
+
+    <div id="col-text">
+      <div class="col-inner">
+        <header class="masthead">
+          <p class="eyebrow">Built with Claude &mdash; Life Sciences</p>
+          <h1>Causal and Interpretable Modeling of Influenza Antigenic Distance</h1>
+          <p class="sub">Separating the hemagglutinin positions that causally drive antigenic escape from the linked positions that merely ride along with them — across three hemagglutination-inhibition datasets, with an interpretable B-spline Kolmogorov–Arnold Network for prediction.</p>
+          <div class="cta-row">
+            <a class="repo-btn" href="https://github.com/sriram98v/claude-science-hackathon">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+              View on GitHub
+            </a>
+            <a class="slides-btn" href="https://sriram98v.github.io/claude-science-hackathon">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 2h13a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5H9v1.4l2.6 1.2a.5.5 0 0 1-.2.95H4.6a.5.5 0 0 1-.2-.95L7 13.4V11H1.5a.5.5 0 0 1-.5-.5v-8a.5.5 0 0 1 .5-.5zm.5 1.5v6h12v-6H2z"/></svg>
+              View presentation
+            </a>
+          </div>
+        </header>
+
+        <div class="text-body">
+<p>This project was built as part of the <a rel="external" href="https://cerebralvalley.ai/e/built-with-claude-life-sciences">Claude Science Hackathon</a>.</p>
+<p><em>A reproducible research notebook.</em> Run top-to-bottom (<code>Kernel → Restart &amp; Run All</code>) to regenerate every table and
+figure from the raw data repository shipped alongside this notebook.</p>
+<h2 id="abstract">Abstract</h2>
+<p>Identifying specific hemagglutinin (HA) mutations that causally alter antibody recognition remains a significant challenge because dense viral phylogenies tightly link functional escape drivers with passenger mutations. While sequence-based models predict antigenic distance with high accuracy, they often conflate the evolutionary dynamics of population-level sweeps with the mechanistic physics of antibody-binding disruption. To address this ambiguity, we define the target estimand as a provenance-independent, type-level interventional contrast at the antigen–antibody interface, characterizing linkage-driven resolution loss as an intrinsic structural feature of observational serology. We analyze two H3N2 <a rel="external" href="https://en.wikipedia.org/wiki/Hemagglutination_assay">hemagglutination-inhibition</a> (HI) datasets by collapsing co-evolving positions and applying target-oriented <a rel="external" href="https://en.wikipedia.org/wiki/Causal_inference">causal discovery</a> algorithms (<a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Constraint-based%20causal%20discovery%20methods/PC.html">PC</a>, <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Score-based%20causal%20discovery%20methods/GES.html">GES</a>, <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Constraint-based%20causal%20discovery%20methods/FCI.html">FCI</a>) prioritized by a 200-resample <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> stability framework. This is paired with an interpretable <a rel="external" href="https://en.wikipedia.org/wiki/B-spline">B-spline</a> <a rel="external" href="https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Arnold_representation_theorem">Kolmogorov–Arnold Network</a> (KAN) to evaluate per-position response curves and capture second-order position-by-position <a rel="external" href="https://en.wikipedia.org/wiki/Epistasis">epistasis</a>. Under matched-fold <a rel="external" href="https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29">cross-validation</a>, the first-order KAN performs slightly below black-box <a rel="external" href="https://en.wikipedia.org/wiki/Gradient_boosting">gradient boosting</a> (lower $R^2$ by $\approx 0.025\text{--}0.028$; <a rel="external" href="https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test">Wilcoxon</a> $p &lt; 10^{-5}$); a second-order KAN mitigates most of this performance gap under a 5-fold validation protocol. Cross-method convergence evaluates agreement across causal and association-based frameworks, identifying candidate drivers that overlap classical antigenic sites A and B. In the VHID dataset, convergent signals localize to mature H3 positions 156 and 189, where position 156 exhibits characteristics consistent with a stable hitchhiker (high frequency, small non-robust effect) and position 289 emerges as a doubly-robust candidate. In the Bedford dataset, convergent positions include mature 133, 158, and 189, with 158 demonstrating sensitivity to feature encoding. Under cluster resampling, mature position 189 remains the most robust signal across both datasets. Backdoor-adjusted effect sizes systematically shrink relative to marginal associations, consistent with the mitigation of phylogenetic confounding, though a Shipley <a rel="external" href="https://en.wikipedia.org/wiki/Bayesian_network">d-separation</a> test rejects a simplified sink-star structure. Finally, rigorous grouped (leave-serum-out) <a rel="external" href="https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29">cross-validation</a> establishes a baseline generalization accuracy (median $R^2 \approx 0.615$ for VHID, $\approx 0.498$ for Bedford). This work establishes a stability-ranked, confounding-audited, and linkage-aware feature-selection framework that systematically isolates candidate biophysical drivers of antigenic drift from observational data.</p>
+<h2 id="introduction">Introduction</h2>
+<p>Influenza viruses continuously evolve under selective pressure from population immunity, accumulating substitutions in surface glycoproteins that facilitate immune escape. This process of antigenic drift causes circulating strains to diverge from those recognized by prior immunity, reducing vaccine effectiveness when selected vaccine strains mismatch circulating variants. This divergence is quantified as antigenic distance, and measuring it accurately is essential for evaluating vaccine efficacy and optimizing antigen selection. Traditionally, antigenic distance is determined via the <a rel="external" href="https://en.wikipedia.org/wiki/Hemagglutination_assay">hemagglutination-inhibition</a> (HI) assay, where lower cross-titers indicate greater immune escape. While frameworks like <a rel="external" href="https://en.wikipedia.org/wiki/Antigenic_cartography">antigenic cartography</a> have been foundational in mapping these titers, generating the required serum panels is logistically demanding, costly, and prone to inter-laboratory variation. This bottleneck has motivated sequence-based predictive models designed to forecast HI titers directly from hemagglutinin (HA) sequences.</p>
+<p>However, while machine learning approaches achieve high predictive accuracy, they frequently operate as black boxes, identifying predictive correlates rather than isolating the underlying causal drivers of immune escape. Because influenza strains share a dense phylogenetic history, HA positions exhibit strong <a rel="external" href="https://en.wikipedia.org/wiki/Linkage_disequilibrium">linkage disequilibrium</a>. Consequently, passenger mutations riding along with functional escape drivers appear as predictive as the drivers themselves. To resolve this ambiguity, this study introduces a precise conceptual reframing. Disentangling the drivers of antigenic drift requires separating the evolutionary question (which substitutions were favored by natural selection and swept the population) from the mechanistic question (which substitutions physically disrupt antibody recognition when introduced into a given strain background). This study focuses explicitly on the second, mechanistic question. We define our target estimand not as a historical claim about viral evolution, but as a provenance-independent, type-level interventional contrast at the antigen-antibody interface. Ideally, this contrast reflects a controlled biophysical experiment: introducing a single residue change at position $p$ in reference virus B to match virus A, while holding the rest of the protein sequence fixed, and measuring the resulting change in HI titer. The magnitude of this effect depends strictly on the structural footprint and local chemistry, independent of whether the mutation arose via positive selection or neutral drift. While evolutionary provenance does not dictate the biophysical effect itself, it heavily constrains our capacity to identify it from observational data. The selective history of the virus introduces systematic phylogenetic confounding, clustering distinct mutations into tightly linked blocks. Acknowledging this architecture allows us to treat linkage-driven resolution loss as an inherent structural characteristic of observational HI data, which must be formally accommodated within the analytical pipeline.</p>
+<p><strong>Related works.</strong> Antigenic cartography revealed the punctuated cluster structure of H3N2 drift by embedding HI tables into low-dimensional maps, and subsequent models unified antigenic and genetic evolution within joint phylogenetic frameworks. Modern sequence-based predictors forecast cross-immunity between drifted strains from sequence data with high accuracy. While these approaches are primarily predictive or descriptive, they do not explicitly learn causal structure over individual HA positions with quantified stability. The antigenic sites encompassing these positions were originally defined structurally and serologically (sites A through E on the H3 head) and subsequently refined via substitution resolution and deep mutational scanning escape maps. Our approach evaluates the extent to which these positions can be recovered directly from HI titers without structural priors. This framework complements influenza fitness models by isolating per-position candidate drivers and builds on intelligible-model literature for pairwise interactions.</p>
+<p><strong>Our contributions.</strong> We combine several ingredients that are not usually applied together for HI data to build a conservative, interpretable, and self-audited feature-selection pipeline. First, we implement linkage collapse with target-oriented <a rel="external" href="https://en.wikipedia.org/wiki/Causal_inference">causal discovery</a>: we merge near-deterministic co-evolving positions into representative loci, then learn the direct-cause neighborhood of the HI target using <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Constraint-based%20causal%20discovery%20methods/PC.html">PC</a>, <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Score-based%20causal%20discovery%20methods/GES.html">GES</a>, and <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Constraint-based%20causal%20discovery%20methods/FCI.html">FCI</a> algorithms, ranking every candidate by 200-resample <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> stability. Second, we deploy a genuine <a rel="external" href="https://en.wikipedia.org/wiki/B-spline">B-spline</a> <a rel="external" href="https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Arnold_representation_theorem">Kolmogorov–Arnold Network</a> (KAN), an interpretable non-linear predictor whose learned per-position response curves are directly inspectable, and extend it to second order to capture and visualize position-by-position <a rel="external" href="https://en.wikipedia.org/wiki/Epistasis">epistasis</a>. Third, we assess cross-method convergence, treating it honestly as agreement between one causal screen and three <em>correlated</em> association screens (the KAN, <a rel="external" href="https://en.wikipedia.org/wiki/Gradient_boosting">gradient boosting</a>, and univariate association) rather than four independent lines of evidence; positions flagged across these screens form our strongest candidate-driver claims. We then subject those claims to a battery of audits: a <a rel="external" href="https://en.wikipedia.org/wiki/Permutation_test">permutation</a> calibration showing that the <a rel="external" href="https://en.wikipedia.org/wiki/Fisher_transformation">Fisher-Z</a> conditional-independence test holds near-nominal size on our binary, <a rel="external" href="https://en.wikipedia.org/wiki/Censoring_%28statistics%29">left-censored</a> data; a cluster (by-virus and by-serum) <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> that separates a robust convergent core from an over-optimistic stability tier; a <a rel="external" href="https://en.wikipedia.org/wiki/Censoring_%28statistics%29">left-censoring</a> sensitivity analysis of the adjusted effect sizes; and a token-level identifiability audit of the discovered structure. Throughout, we estimate backdoor-adjusted per-position effect sizes but report them as partial-regression coefficients, because the baseline adjustment assumptions are rejected in-sample.</p>
+<p>The remainder of the notebook is organized as an executable paper. <a href="#Methods">Section 2 (Methods)</a> introduces the two H3N2 HI datasets and explains how their feature matrices are derived from the raw data. <a href="#Results">Section 3 (Results)</a> then carries the analysis in full, each subsection stating how a step is performed, presenting its output, and interpreting it: the predictive benchmark and its leakage-free <a rel="external" href="https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29">cross-validated</a> comparison (§ <a href="#Predictive-Benchmark">3.1</a>–<a href="#Cross-Validated-$R^2$-and-Rigorous-Error-Bounds">3.2</a>); target-oriented <a rel="external" href="https://en.wikipedia.org/wiki/Causal_inference">causal discovery</a> together with the pre-collapse linkage block sizes, a <a rel="external" href="https://en.wikipedia.org/wiki/Permutation_test">permutation</a> calibration of the <a rel="external" href="https://en.wikipedia.org/wiki/Fisher_transformation">Fisher-Z</a> independence test, and a cluster <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> of candidate stability (§ <a href="#Causal-discovery">3.3</a>), followed by the discovered dependency structure (§ <a href="#Discovered-Dependency-Structure">3.4</a>); the interpretable <a rel="external" href="https://en.wikipedia.org/wiki/B-spline">B-spline</a> KAN and its second-order <a rel="external" href="https://en.wikipedia.org/wiki/Epistasis">epistasis</a> extension (§ <a href="#Interpretable-B-Spline-KAN">3.5</a>–<a href="#Capturing-Epistasis:-A-Second-Order-KAN">3.6</a>); cross-method convergence (§ <a href="#Cross-Method-Convergence">3.7</a>); backdoor-adjusted effect sizes and their sensitivity to titer <a rel="external" href="https://en.wikipedia.org/wiki/Censoring_%28statistics%29">left-censoring</a> (§ <a href="#Backdoor-Adjusted-Effect-Sizes">3.8</a>); three DAG-validation tests (§ <a href="#Validating-the-Causal-Structure">3.9</a>); and a continuous per-position encoding that re-examines the titer <a rel="external" href="https://en.wikipedia.org/wiki/Markov_blanket">Markov blanket</a> (§ <a href="#Continuous-Per-Position-Encoding-and-the-Titer-Markov-Blanket">3.10</a>). The narrative moves from how much of the HI signal is learnable and how non-linear it is, through the discovered candidate drivers and their audited dependency structure, to per-position effect sizes and the validation — and in-sample rejection — of the discovered graph. <a href="#Conclusion">Section 4 (Conclusion)</a> interprets the convergent positions biologically, states plainly where residue-level attribution is limited and what assumptions the causal framing rests on, and looks ahead. <a href="#References">Section 5</a> lists references.</p>
+<h2 id="methods">Methods</h2>
+<p>This section outlines the data structure and feature extraction protocols. Analytical procedures are described alongside their respective outputs in the Results section to maintain context. Configuration parameters (random seeds, linkage thresholds, <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> counts, and tier cutoffs) are centralized in src/analysis.py. Computationally intensive steps, such as the causal <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> and repeated $k$-fold <a rel="external" href="https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29">cross-validation</a>, are managed via environment flags and are defaulted to load precomputed results to ensure reproducibility.</p>
+<h3 id="datasets">Datasets</h3>
+<p>The study evaluates two H3N2 virus $\times$ reference-strain HI panels. Each dataset is derived from previously published works: the VHID panel is derived from the DPCIPI dataset (Du et al., 2023), and the Bedford dataset is obtained from Bedford et al. (2014). While both panels represent H3N2 HI datasets, they differ in metadata completeness. The Bedford H3N2 panel is curated from Bedford et al. (2014), GenBank accessions, and isolate collection years, all of which are fully populated. We analyze the two panels as independent replications of the same underlying structure-learning task rather than assuming a calibrated joint assay protocol.
+The reported positions correspond to mature H3 residue numbers. Feature matrices are indexed by HA1 alignment columns, which map to mature numbers via fixed per-panel offsets. The VHID reference is gapless from mature Q1, yielding a 0-residue offset. In contrast, the Bedford H3N2 alignment contains a 9-residue signal-peptide prefix and an internal gap at column 17; thus, mature Q1 maps to column 10, and for all reported positions ($\ge \text{column 143}$), $\text{mature residue} = \text{column} - 10$. This mapping was verified against column-wise consensus references and gapless VHID references to ensure structural interpretability.</p>
+<h4 id="preprocessing">Preprocessing</h4>
+<p>The sequence data is formatted as per-position HA1 feature matrices under two distinct encodings:
+Binary Mismatch Encoding: Sets a position to 1 when the virus and reference residues differ at that HA1 alignment position and 0 otherwise; this serves as the primary input for <a rel="external" href="https://en.wikipedia.org/wiki/Causal_inference">causal discovery</a>.
+<a rel="external" href="https://doi.org/10.1126/science.185.4154.862">Grantham</a> Encoding: Quantifies the physicochemical distance between residue pairs based on <a rel="external" href="https://doi.org/10.1126/science.185.4154.862">Grantham</a> (1974) metrics (gap-aware); this is utilized for predictive modeling and KAN response curves.</p>
+<p>The target variable is modeled as $\log_2(\text{HI_titer})$. To ensure complete pipeline traceability, feature matrices are regenerated from raw virus $\times$ reference pair tables using the repository's build scripts (scripts/build_vhid_matrices.py, scripts/build_bedford_matrices.py). Matrix identities were verified against shipped derivatives using <a rel="external" href="https://en.wikipedia.org/wiki/SHA-2">SHA-256</a> checksums. Feature spaces are evaluated independently per panel to prevent artifacts from lineage-specific HA1 trimming.</p>
+<h4 id="reproducing-the-feature-matrices-from-raw-data">Reproducing the feature matrices from raw data</h4>
+<p>So that the study starts from raw data rather than shipped derivatives, we regenerate
+the feature matrices from the cleaned virus × reference pair tables using the
+repository's own build scripts (<code>scripts/build_vhid_matrices.py</code>,
+<code>scripts/build_bedford_matrices.py</code>), which depend only on numpy and pandas. Running
+them here makes the matrices provably the shipped ones (verified by <a rel="external" href="https://en.wikipedia.org/wiki/SHA-2">SHA-256</a>).</p>
+<span class="media-anchor" data-media="1" id="anchor-1"></span>
+<div class="media-block" id="media-1">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataset</th>
+      <th>source</th>
+      <th>n_pairs</th>
+      <th>HA1_positions</th>
+      <th>variant_positions</th>
+      <th>log2_titer_mean</th>
+      <th>log2_titer_std</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>vhid_HA1</td>
+      <td>VHID H3N2 (Du et al. 2023)</td>
+      <td>2751</td>
+      <td>329</td>
+      <td>102</td>
+      <td>7.256</td>
+      <td>2.861</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>H3N2</td>
+      <td>Bedford H3N2 (Bedford et al. 2014)</td>
+      <td>7808</td>
+      <td>329</td>
+      <td>312</td>
+      <td>7.770</td>
+      <td>2.286</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<p>Each dataset is internally row-aligned across its binary matrix, <a rel="external" href="https://doi.org/10.1126/science.185.4154.862">Grantham</a> matrix, and
+cleaned pair table. Feature spaces are comparable <em>within</em> a lineage but not across
+lineages (each lineage was HA1-trimmed against its own reference), so we analyze the
+two datasets independently and compare only which HA positions emerge.</p>
+<h4 id="the-target-distribution">The target distribution</h4>
+<p>Before any modeling we look at what is being predicted. The panel below shows the
+distribution of log2 HI titer in each dataset; its spread sets the scale against which
+every R² reported in the Results should be read.</p>
+<span class="media-anchor" data-media="2" id="anchor-2"></span>
+<div class="media-block" id="media-2">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/target_distribution.png" alt="target distribution">
+</div>
+<h2 id="results">Results</h2>
+<p>After establishing baseline performance metrics in <a href="#Predictive-Benchmark">Section 3.1</a>, we describe the generalization capacity and error bounds of our sequence-to-antigenic maps under strict grouped and temporal <a rel="external" href="https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29">cross-validation</a> protocols in <a href="#Cross-Validated-$R^2$-and-Rigorous-Error-Bounds">Section 3.2</a>. In <a href="#Causal-discovery">Section 3.3</a>, we outline the structural <a rel="external" href="https://en.wikipedia.org/wiki/Causal_inference">causal discovery</a> pipeline, linkage-collapse dynamics, and test calibrations. In <a href="#Discovered-Dependency-Structure">Section 3.4</a>, we analyze the resulting parent dependency structures and check for intermediate mediation. We then present our interpretable modeling frameworks, detailing the 1-D response curves of the first-order <a rel="external" href="https://en.wikipedia.org/wiki/B-spline">B-spline</a> KAN in <a href="#Interpretable-B-Spline-KAN">Section 3.5</a> and the bivariate tensor-product surfaces for capturing <a rel="external" href="https://en.wikipedia.org/wiki/Epistasis">epistasis</a> in <a href="#Capturing-Epistasis:-A-Second-Order-KAN">Section 3.6</a>. In <a href="#Cross-Method-Convergence">Section 3.7</a>, we evaluate the cross-method convergence of our feature screens and verify non-linear omissions. Finally, we describe the estimation of backdoor-adjusted effect sizes and driver-hitchhiker differentiation in <a href="#Backdoor-Adjusted-Effect-Sizes">Section 3.8</a>, the global <a rel="external" href="https://en.wikipedia.org/wiki/Bayesian_network">d-separation</a> validation tests in <a href="#Validating-the-Causal-Structure">Section 3.9</a>, and the continuous physicochemical encoding replication in <a href="#Continuous-Per-Position-Encoding-and-the-Titer-Markov-Blanket">Section 3.10</a>.</p>
+<h3 id="predictive-benchmark">Predictive Benchmark</h3>
+<p>To establish performance baselines and characterize the mathematical properties of the antigenic signal, we evaluated the held-out test $R^2$ (20% split) for the top-performing single-position (max univariate $R^2$), <a rel="external" href="https://en.wikipedia.org/wiki/Lasso_%28statistics%29">LASSO</a>, <a rel="external" href="https://en.wikipedia.org/wiki/Ridge_regression">Ridge</a>, and <a rel="external" href="https://en.wikipedia.org/wiki/XGBoost">XGBoost</a> models. The predictive performance across both datasets consistently follows the ordering:</p>
+<p>$$
+\begin{aligned}
+&amp;\text{<a rel="external" href="https://en.wikipedia.org/wiki/XGBoost">XGBoost</a>} \gtrsim \text{<a rel="external" href="https://en.wikipedia.org/wiki/Lasso_%28statistics%29">LASSO</a>} \approx \text{<a rel="external" href="https://en.wikipedia.org/wiki/Ridge_regression">Ridge</a>} \\
+&amp;\qquad \gg \text{Best Single Position}.
+\end{aligned}
+$$</p>
+<span class="media-anchor" data-media="3" id="anchor-3"></span>
+<div class="media-block" id="media-3">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataset</th>
+      <th>n</th>
+      <th>n_features</th>
+      <th>univ_sig</th>
+      <th>univ_best_singleR2</th>
+      <th>LASSO_testR2</th>
+      <th>Ridge_testR2</th>
+      <th>XGB_testR2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>vhid_HA1</td>
+      <td>2751</td>
+      <td>102</td>
+      <td>78</td>
+      <td>0.443</td>
+      <td>0.751</td>
+      <td>0.754</td>
+      <td>0.862</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>H3N2</td>
+      <td>7808</td>
+      <td>312</td>
+      <td>185</td>
+      <td>0.205</td>
+      <td>0.509</td>
+      <td>0.522</td>
+      <td>0.618</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<p>The substantial performance delta between the single-position baseline and multivariable models indicates that the antigenic signal is distributed across multiple positions. Furthermore, the performance margin achieved by <a rel="external" href="https://en.wikipedia.org/wiki/XGBoost">XGBoost</a> over linear models suggests the presence of underlying non-linear and interaction structures, motivating the deployment of the KAN framework detailed in <a href="#Interpretable-B-Spline-KAN">Section 3.5</a>.</p>
+<h3 id="cross-validated-r-2-and-rigorous-error-bounds">Cross-Validated $R^2$ and Rigorous Error Bounds</h3>
+<p>To provide robust uncertainty estimates and ensure rigorous model comparison, all models were evaluated under an identical $5 \times 4$ repeated $k$-fold <a rel="external" href="https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29">cross-validation</a> protocol using matched folds. <a rel="external" href="https://en.wikipedia.org/wiki/XGBoost">XGBoost</a> parameters were optimized via <a rel="external" href="https://en.wikipedia.org/wiki/Early_stopping">early stopping</a>, performed strictly on an inner validation split carved from the training fold, thereby protecting the test fold from data leakage. Models are compared using a matched-fold paired test (<a rel="external" href="https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test">Wilcoxon</a> signed-rank test on the 20 per-fold differences) rather than evaluating confidence-interval overlaps.</p>
+<p>While a paired test on random splits effectively differentiates model architectures, random partitioning allows identical viruses and reference antisera to recur across training and testing folds. This pair-level recurrence can artificially inflate performance metrics because models can memorize strain-specific profiles rather than generalizing to unseen variants. We treat random-split metrics purely as a baseline and leverage leakage-free grouped <a rel="external" href="https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29">cross-validation</a> as our primary generalization metric.</p>
+<span class="media-anchor" data-media="4" id="anchor-4"></span>
+<div class="media-block" id="media-4">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/cv_r2.png" alt="cv r2">
+</div>
+<p>Under the random-split baseline, <a rel="external" href="https://en.wikipedia.org/wiki/XGBoost">XGBoost</a> yields the highest <a rel="external" href="https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29">cross-validated</a> $R^2$ across both datasets (VHID: 0.845, Bedford: 0.613), followed closely by the KAN (VHID: 0.820, Bedford: 0.585). The matched-fold paired test confirms that the performance gap is statistically robust: the KAN trails <a rel="external" href="https://en.wikipedia.org/wiki/XGBoost">XGBoost</a> by 0.025 $R^2$ on VHID (<a rel="external" href="https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test">Wilcoxon</a> $p \approx 2 \times 10^{-6}$) and by 0.028 on Bedford ($p \approx 6 \times 10^{-6}$). The KAN's primary utility lies in its additive interpretability, recovering most of the tree-based model's performance while explicitly exposing per-position response curves.</p>
+<p>To determine true generalization performance on unseen strains, we executed grouped <a rel="external" href="https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29">cross-validation</a> via leave-virus-out and leave-serum-out protocols.</p>
+<span class="media-anchor" data-media="5" id="anchor-5"></span>
+<div class="media-block" id="media-5">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataset</th>
+      <th>scheme</th>
+      <th>n_groups</th>
+      <th>method</th>
+      <th>folds</th>
+      <th>median_R2</th>
+      <th>min_R2</th>
+      <th>max_R2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>vhid_HA1</td>
+      <td>leave_virus_out</td>
+      <td>246</td>
+      <td>LASSO</td>
+      <td>5</td>
+      <td>0.736</td>
+      <td>0.685</td>
+      <td>0.757</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>vhid_HA1</td>
+      <td>leave_virus_out</td>
+      <td>246</td>
+      <td>Ridge</td>
+      <td>5</td>
+      <td>0.728</td>
+      <td>0.626</td>
+      <td>0.762</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>vhid_HA1</td>
+      <td>leave_virus_out</td>
+      <td>246</td>
+      <td>XGBoost</td>
+      <td>5</td>
+      <td>0.821</td>
+      <td>0.795</td>
+      <td>0.862</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>vhid_HA1</td>
+      <td>leave_virus_out</td>
+      <td>246</td>
+      <td>KAN</td>
+      <td>5</td>
+      <td>0.794</td>
+      <td>0.746</td>
+      <td>0.830</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>vhid_HA1</td>
+      <td>leave_serum_out</td>
+      <td>45</td>
+      <td>LASSO</td>
+      <td>5</td>
+      <td>0.596</td>
+      <td>0.420</td>
+      <td>0.747</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>vhid_HA1</td>
+      <td>leave_serum_out</td>
+      <td>45</td>
+      <td>Ridge</td>
+      <td>5</td>
+      <td>0.566</td>
+      <td>0.391</td>
+      <td>0.743</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>vhid_HA1</td>
+      <td>leave_serum_out</td>
+      <td>45</td>
+      <td>XGBoost</td>
+      <td>5</td>
+      <td>0.615</td>
+      <td>0.435</td>
+      <td>0.790</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>vhid_HA1</td>
+      <td>leave_serum_out</td>
+      <td>45</td>
+      <td>KAN</td>
+      <td>5</td>
+      <td>0.589</td>
+      <td>0.292</td>
+      <td>0.744</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>H3N2</td>
+      <td>leave_virus_out</td>
+      <td>304</td>
+      <td>LASSO</td>
+      <td>5</td>
+      <td>0.451</td>
+      <td>-0.123</td>
+      <td>0.511</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>H3N2</td>
+      <td>leave_virus_out</td>
+      <td>304</td>
+      <td>Ridge</td>
+      <td>5</td>
+      <td>0.444</td>
+      <td>-12.525</td>
+      <td>0.494</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>H3N2</td>
+      <td>leave_virus_out</td>
+      <td>304</td>
+      <td>XGBoost</td>
+      <td>5</td>
+      <td>0.547</td>
+      <td>0.442</td>
+      <td>0.590</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>H3N2</td>
+      <td>leave_virus_out</td>
+      <td>304</td>
+      <td>KAN</td>
+      <td>5</td>
+      <td>0.501</td>
+      <td>0.367</td>
+      <td>0.541</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>H3N2</td>
+      <td>leave_serum_out</td>
+      <td>191</td>
+      <td>LASSO</td>
+      <td>5</td>
+      <td>0.429</td>
+      <td>0.299</td>
+      <td>0.531</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>H3N2</td>
+      <td>leave_serum_out</td>
+      <td>191</td>
+      <td>Ridge</td>
+      <td>5</td>
+      <td>0.473</td>
+      <td>0.284</td>
+      <td>0.510</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>H3N2</td>
+      <td>leave_serum_out</td>
+      <td>191</td>
+      <td>XGBoost</td>
+      <td>5</td>
+      <td>0.498</td>
+      <td>0.378</td>
+      <td>0.523</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>H3N2</td>
+      <td>leave_serum_out</td>
+      <td>191</td>
+      <td>KAN</td>
+      <td>5</td>
+      <td>0.438</td>
+      <td>0.355</td>
+      <td>0.479</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<p>The performance metrics degrade under grouped <a rel="external" href="https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29">cross-validation</a>, confirming that random-split protocols are systematically influenced by strain/serum recurrence. Under the strict leave-serum-out protocol, <a rel="external" href="https://en.wikipedia.org/wiki/XGBoost">XGBoost</a> performance settles at a median $R^2$ of 0.615 on VHID and 0.498 on Bedford. These grouped <a rel="external" href="https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29">cross-validation</a> medians represent our honest predictive headlines for sequence-to-antigenic maps operating outside the training distribution.</p>
+<h4 id="temporal-transportability">Temporal Transportability</h4>
+<p>Since the Bedford H3N2 dataset includes temporal metadata (1968–2010), we evaluated forward-in-time generalization using an expanding window strategy: training on all pairs up to year $t$ and testing on the subsequent 5-year block.</p>
+<table><thead><tr><th style="text-align: right">train ≤</th><th>test window</th><th style="text-align: right">n_test</th><th style="text-align: right">Ridge R²</th><th style="text-align: right">XGBoost R²</th></tr></thead><tbody>
+<tr><td style="text-align: right">1990</td><td>1991–1995</td><td style="text-align: right">927</td><td style="text-align: right">−4.70</td><td style="text-align: right">0.43</td></tr>
+<tr><td style="text-align: right">1995</td><td>1996–2000</td><td style="text-align: right">369</td><td style="text-align: right">0.35</td><td style="text-align: right"><strong>0.60</strong></td></tr>
+<tr><td style="text-align: right">2000</td><td>2001–2005</td><td style="text-align: right">3636</td><td style="text-align: right">−3.73</td><td style="text-align: right"><strong>−0.37</strong></td></tr>
+<tr><td style="text-align: right">2005</td><td>2006–2010</td><td style="text-align: right">1297</td><td style="text-align: right">−0.59</td><td style="text-align: right">0.25</td></tr>
+</tbody></table>
+<p>Forward-in-time generalization displays notable instability; in the 2001–2005 test window, <a rel="external" href="https://en.wikipedia.org/wiki/XGBoost">XGBoost</a> performance drops to $R^2 = -0.37$. This highlights a primary boundary of transportability: models trained exclusively on past seasons struggle to reliably predict titers for future antigenic clusters when drift crosses major structural boundaries that are absent from the training history.</p>
+<span class="media-anchor" data-media="6" id="anchor-6"></span>
+<div class="media-block" id="media-6">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/figure-03.png" alt="figure 03">
+</div>
+<h4 id="cross-cluster-transportability-of-property-encodings">Cross-Cluster Transportability of Property Encodings</h4>
+<p>We tested whether encoding substitutions by their physicochemical property shifts (a 12-property $L_2$ scalar) rather than by raw amino acid identity enhances temporal transportability. Mapping unseen substitutions to their local shifts in charge, volume, or hydrophobicity could enable the model to generalize based on biophysical similarity.</p>
+<p>Our empirical results do not support this hypothesis. Across the unbiased <a rel="external" href="https://en.wikipedia.org/wiki/XGBoost">XGBoost</a> models, the mean future $R^2$ across all test windows was 0.19 for the binary encoding, 0.22 for the <a rel="external" href="https://doi.org/10.1126/science.185.4154.862">Grantham</a> distance, and 0.18 for the 12-property $L_2$ vector. The single-scalar <a rel="external" href="https://doi.org/10.1126/science.185.4154.862">Grantham</a> distance yielded the most stable performance across windows, undermining the assumption that higher-dimensional property vectors improve generalization to distribution shifts. All three encodings systematically fail during the 2001–2005 window, confirming that substitution-based representations do not fully capture major shifts in antigenic distribution.</p>
+<p>Consequently, the utility of property encodings rests on their interpretability (<a href="#Continuous-Per-Position-Encoding-and-the-Titer-Markov-Blanket">Section 3.10</a>) rather than cross-cluster predictive transport.</p>
+<span class="media-anchor" data-media="7" id="anchor-7"></span>
+<div class="media-block" id="media-7">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/figure-04.png" alt="figure 04">
+</div>
+<h3 id="causal-discovery">Causal discovery</h3>
+<p>We model the HI titer as a downstream causal sink: HA sequence variations cause variations in titer, orienting all feature-to-target edges into the target variable. The direct-cause candidates are defined as the immediate parents of this target node.</p>
+<p>The structural pipeline proceeds as follows</p>
+<p>$$
+\begin{aligned}
+\text{Power Filter} &amp;\rightarrow \text{Linkage Collapse } (\vert{}\phi\vert{} \ge 0.8) \\
+&amp;\rightarrow \text{Constraint/Score Discovery } (\text{<a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Constraint-based%20causal%20discovery%20methods/PC.html">PC</a>, <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Score-based%20causal%20discovery%20methods/GES.html">GES</a>, <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Constraint-based%20causal%20discovery%20methods/FCI.html">FCI</a>}) \\
+&amp;\rightarrow \text{Bootstrap Stability Evaluation } (B=200).
+\end{aligned}
+$$</p>
+<p>Linkage collapse is a critical prerequisite; near-deterministic co-evolution violates the faithfulness assumption and introduces structural singularities into constraint-based searches. Collapsing these blocks into single representative loci resolves these dependencies. Because causal claims apply to the entire co-evolving unit, we explicitly report block sizes throughout.</p>
+<span class="media-anchor" data-media="8" id="anchor-8"></span>
+<div class="media-block" id="media-8">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataset</th>
+      <th>variant_positions</th>
+      <th>loci_after_collapse</th>
+      <th>multi_position_blocks</th>
+      <th>residual_strong_pairs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>vhid_HA1</td>
+      <td>102</td>
+      <td>71</td>
+      <td>10</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>H3N2</td>
+      <td>312</td>
+      <td>123</td>
+      <td>9</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<span class="media-anchor" data-media="9" id="anchor-9"></span>
+<div class="media-block" id="media-9">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>position</th>
+      <th>bootstrap_freq</th>
+      <th>tier</th>
+      <th>PC</th>
+      <th>GES</th>
+      <th>FCI</th>
+      <th>block_size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>156</td>
+      <td>1.000</td>
+      <td>high</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>189</td>
+      <td>1.000</td>
+      <td>high</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>289</td>
+      <td>0.955</td>
+      <td>high</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>158</td>
+      <td>0.950</td>
+      <td>high</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>144</td>
+      <td>0.505</td>
+      <td>moderate</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<span class="media-anchor" data-media="10" id="anchor-10"></span>
+<div class="media-block" id="media-10">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>position</th>
+      <th>bootstrap_freq</th>
+      <th>tier</th>
+      <th>PC</th>
+      <th>GES</th>
+      <th>FCI</th>
+      <th>block_size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>11</td>
+      <td>1.000</td>
+      <td>high</td>
+      <td>True</td>
+      <td>False</td>
+      <td>n/a</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>143</td>
+      <td>1.000</td>
+      <td>high</td>
+      <td>True</td>
+      <td>True</td>
+      <td>n/a</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>167</td>
+      <td>1.000</td>
+      <td>high</td>
+      <td>True</td>
+      <td>True</td>
+      <td>n/a</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>168</td>
+      <td>1.000</td>
+      <td>high</td>
+      <td>True</td>
+      <td>True</td>
+      <td>n/a</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>199</td>
+      <td>1.000</td>
+      <td>high</td>
+      <td>True</td>
+      <td>False</td>
+      <td>n/a</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>203</td>
+      <td>0.995</td>
+      <td>high</td>
+      <td>True</td>
+      <td>False</td>
+      <td>n/a</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>288</td>
+      <td>0.815</td>
+      <td>moderate</td>
+      <td>True</td>
+      <td>False</td>
+      <td>n/a</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>200</td>
+      <td>0.650</td>
+      <td>moderate</td>
+      <td>True</td>
+      <td>False</td>
+      <td>n/a</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<p>Following linkage collapse, residual strong locus pairs ($\vert{}\phi\vert{} \ge 0.9$) drop to zero in both datasets. <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Constraint-based%20causal%20discovery%20methods/PC.html">PC</a> and <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Score-based%20causal%20discovery%20methods/GES.html">GES</a> algorithms were executed on the collapsed feature space, with selection frequency across 200 <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> resamples used to categorize candidates into stability tiers: High Confidence ($\ge 0.9$) and Moderate Confidence ($0.5\text{--}0.9$).
+Under standard i.i.d. resampling, the High Confidence parent sets encompass:</p>
+<ul>
+<li>VHID: {156, 158, 189, 289}</li>
+<li>Bedford (Mature): {2, 133, 157, 158, 189, 193}
+Positions with a block_size &gt; 1 carry structural claims for the entire linkage group rather than the isolated index alone (e.g., Bedford mature position 2 represents a 9-position co-evolving block; see <a href="#Pre-Collapse-Linkage-Block-Dynamics">Section 3.3.1</a>).
+We apply two critical caveats to these stability classifications:</li>
+</ul>
+<ol>
+<li><strong>Cluster Dependencies:</strong> The i.i.d. <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> represents an upper bound on stability. Under a rigorous cluster <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> that resamples at the level of whole viruses or whole sera to preserve data dependencies, the VHID high-confidence set contracts: only positions {156, 189} remain robust under virus-level resampling, and {189, 289} under serum-level resampling. Mature position 189 consistently retains its High Confidence classification across all three resampling strategies.</li>
+<li><strong>Algorithmic Concordance:</strong> In the Bedford dataset, <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Score-based%20causal%20discovery%20methods/GES.html">GES</a> independently corroborates the <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Constraint-based%20causal%20discovery%20methods/PC.html">PC</a> parents (mature 133, 157, 158). However, in the VHID dataset, the two algorithms diverge significantly: <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Constraint-based%20causal%20discovery%20methods/PC.html">PC</a> selects {144, 156, 158, 189, 289} while <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Score-based%20causal%20discovery%20methods/GES.html">GES</a> selects {50, 133, 144, 145, 262, 276}, intersecting exclusively at position 144. This divergence indicates structural sensitivities to modeling assumptions within the VHID panel. The <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> framework ranks candidates by selection stability rather than arbitrating algorithmic divergence.</li>
+</ol>
+<h4 id="pre-collapse-linkage-block-dynamics">Pre-Collapse Linkage Block Dynamics</h4>
+<p>Linkage collapse groups positions co-evolving at $\vert{}\phi\vert{} \ge 0.8$ into representative units. The distribution of these blocks is heavy-tailed: while the majority of positions remain singletons (61/71 in VHID; 114/123 in Bedford), a few large blocks absorb substantial portions of the feature space.</p>
+<p>In the Bedford H3N2 dataset, the largest pre-collapse block spans 88 positions (representative alignment column 181), the second spans 55 positions (column 90), and the third spans 26 positions (column 50). These large, clade-linked units absorb numerous head positions, indicating that purely observational methods cannot structurally disentangle individual residue effects within these blocks. Conversely, the VHID dataset exhibits less linkage; its largest block encompasses only 14 positions (column 173), allowing its collapsed loci to map more directly to individual amino acid changes.</p>
+<span class="media-anchor" data-media="11" id="anchor-11"></span>
+<div class="media-block" id="media-11">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/block_size.png" alt="block size">
+</div>
+<span class="media-anchor" data-media="12" id="anchor-12"></span>
+<div class="media-block" id="media-12">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataset</th>
+      <th>n_blocks</th>
+      <th>positions</th>
+      <th>singletons</th>
+      <th>multi_position_blocks</th>
+      <th>largest_block</th>
+      <th>second_block</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>VHID H3N2 (Du et al. 2023)</td>
+      <td>71</td>
+      <td>102</td>
+      <td>61</td>
+      <td>10</td>
+      <td>14</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Bedford H3N2 (Bedford et al. 2014)</td>
+      <td>123</td>
+      <td>312</td>
+      <td>114</td>
+      <td>9</td>
+      <td>88</td>
+      <td>55</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<span class="media-anchor" data-media="13" id="anchor-13"></span>
+<div class="media-block" id="media-13">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataset</th>
+      <th>rank</th>
+      <th>rep_align_col</th>
+      <th>rep_mature_H3</th>
+      <th>block_size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>VHID H3N2 (Du et al. 2023)</td>
+      <td>1</td>
+      <td>173</td>
+      <td>173</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>VHID H3N2 (Du et al. 2023)</td>
+      <td>2</td>
+      <td>25</td>
+      <td>25</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>VHID H3N2 (Du et al. 2023)</td>
+      <td>3</td>
+      <td>80</td>
+      <td>80</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Bedford H3N2 (Bedford et al. 2014)</td>
+      <td>1</td>
+      <td>181</td>
+      <td>171</td>
+      <td>88</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Bedford H3N2 (Bedford et al. 2014)</td>
+      <td>2</td>
+      <td>90</td>
+      <td>80</td>
+      <td>55</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Bedford H3N2 (Bedford et al. 2014)</td>
+      <td>3</td>
+      <td>50</td>
+      <td>40</td>
+      <td>26</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<h4 id="calibration-of-the-fisher-z-test-under-permutation-nulls">Calibration of the Fisher-Z Test Under Permutation Nulls</h4>
+<p>Conditional independence decisions within the causal pipeline rely on the <a rel="external" href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient">Pearson</a> <a rel="external" href="https://en.wikipedia.org/wiki/Partial_correlation">partial-correlation</a> <a rel="external" href="https://en.wikipedia.org/wiki/Fisher_transformation">Fisher-Z</a> test (fisherz). Because the data consists of binary mismatch features and <a rel="external" href="https://en.wikipedia.org/wiki/Censoring_%28statistics%29">left-censored</a> titers, the multivariate normality assumption is violated, making the operating threshold ($\alpha = 0.01$) nominal.</p>
+<p>To evaluate true type-I error rates, we constructed an empirical null distribution by permuting the $\log_2$ titer column, thereby disrupting feature-to-target relationships while preserving feature-to-feature correlation structures. We evaluated 10,000 independent tests across conditioning sizes ${0, 1, 2, 3}$ using three distinct encodings: VHID collapsed binary loci, VHID continuous $L_2$ physicochemical distances, and a top-40 screened subset of Bedford binary loci.</p>
+<p>At the target operating point ($\alpha = 0.01$), the empirical false-positive rates align closely with nominal expectations, landing within their respective 95% <a rel="external" href="https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval">Clopper–Pearson</a> intervals:</p>
+<ul>
+<li>VHID Binary Loci: 0.0103 [0.0084, 0.0125]</li>
+<li>VHID $L_2$ Continuous Loci: 0.0102 [0.0083, 0.0124]</li>
+<li>Bedford Binary Loci: 0.0094 [0.0076, 0.0115]</li>
+</ul>
+<p>At a looser threshold ($\alpha = 0.05$), marginal deviations occur (VHID binary: 0.054, Bedford binary: 0.045, continuous: 0.051). These results indicate that the <a rel="external" href="https://en.wikipedia.org/wiki/Fisher_transformation">Fisher-Z</a> test maintains controlled size at the target operating threshold ($\alpha = 0.01$), preventing inflation of the false-positive edge rate on these data.</p>
+<span class="media-anchor" data-media="14" id="anchor-14"></span>
+<div class="media-block" id="media-14">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/fisherz_calibration.png" alt="fisherz calibration">
+</div>
+<h4 id="cluster-block-bootstrap-is-selection-stability-an-artifact-of-i-i-d-resampling">Cluster (block) bootstrap: is selection stability an artifact of i.i.d. resampling?</h4>
+<p>The 200× selection-stability <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> above resamples HI <strong>pairs</strong> independently. But VHID's 2751 pairs derive from only 246 viruses crossed with 45 reference sera, and the grouped <a rel="external" href="https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29">cross-validation</a> in §<a href="#Cross-Validated-$R^2$-and-Rigorous-Error-Bounds">3.2</a> shows this clustering is decisive (held-out R² drops ~0.23 when folds respect virus grouping). Resampling pairs i.i.d. treats correlated pairs as independent draws and can therefore <em>overstate</em> how reproducibly a position is selected.</p>
+<p>To test this directly we re-ran the identical collapse → <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Constraint-based%20causal%20discovery%20methods/PC.html">PC</a> parent-selection routine (<code>src/causal_helpers.py</code>), changing only the resampling <strong>unit</strong>: instead of drawing pairs, we draw whole <strong>viruses</strong> with replacement (leave-virus-out clusters), and separately whole <strong>reference sera</strong>. Everything else — linkage collapse, the screened 50-locus node set, α=0.01, terminal-target background knowledge — is held fixed, so the comparison isolates the effect of respecting clustering. All three schemes use B=200 on VHID.</p>
+<p><strong>Finding.</strong> The HIGH-stability set is <strong>not</strong> preserved under clustering. Under i.i.d. pairs it is {156, 158, 189, 289}; under <strong>virus</strong> clustering only {156, 189} remain HIGH (158 and 289 fall to moderate), and under <strong>serum</strong> clustering only {189, 289} remain HIGH (156 and 158 fall to moderate). Only <strong>mature 189</strong> stays HIGH in all three schemes. Frequencies of the i.i.d.-HIGH parents move systematically <strong>downward</strong> toward the moderate range (mean change −0.04 under virus resampling, −0.12 under serum resampling; pos 158 falls from 0.95 to 0.69 under serum clustering) — i.e. the pipeline is <em>less</em> confident once pair correlation is accounted for, never more. The convergent-driver headline is unaffected in substance — 156 and 189 are the VHID convergent pair and both survive at least one clustering scheme, 189 survives both — but the four-position HIGH tier reported in §<a href="#Causal-discovery">3.3</a> rests partly on i.i.d. resampling and should be read as an upper bound on selection confidence. The Bedford H3N2 cluster <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> is heavier (≈73 s per <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Constraint-based%20causal%20discovery%20methods/PC.html">PC</a> fit at 7808×50 vs ≈13 s for VHID, so a full 3×200 is ≈50 min CPU); it is left to the shipped i.i.d. run here and flagged as a recommended robustness check.</p>
+<h3 id="discovered-dependency-structure">Discovered Dependency Structure</h3>
+<p>We map the learned relationships into the titer sink as a directed graph, where edge widths represent <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> stability. To evaluate whether the system operates as a strict star graph (parallel, mutually independent features directed into a common child) or exhibits intermediate dependencies, we performed a <a rel="external" href="https://en.wikipedia.org/wiki/Partial_correlation">partial-correlation</a> skeleton check across the parent nodes:</p>
+<ol>
+<li><strong>Intermediate Mediation Check:</strong> Testing each parent against the titer conditional on all remaining parents. A pure intermediate node would become conditionally independent and drop out.</li>
+<li><strong>Mutual Independence Check:</strong> Testing all parent-parent pairs conditional on the remaining parent set (excluding the titer node to prevent collider-induced bias/explaining-away effects).</li>
+</ol>
+<span class="media-anchor" data-media="15" id="anchor-15"></span>
+<div class="media-block" id="media-15">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/dag.png" alt="dag">
+</div>
+<p>Our structural analysis shows that every parent node maintains a statistically significant direct association with the titer when conditioning on all other parents, indicating that the feature set contains no pure intermediates. However, the parent nodes are densely interconnected: we identify 5/10 significant parent-parent adjacencies in VHID and 21/28 in Bedford.
+The graph is therefore not a strict star. The observational data confirms strong structural dependencies among the causal parents. While the direction of these internal edges or the exact proportion of mediated vs. direct effects cannot be uniquely oriented without direct interventional data, this dense linear interdependence parallels the non-linear <a rel="external" href="https://en.wikipedia.org/wiki/Epistasis">epistatic</a> surfaces captured by our second-order networks.</p>
+<h3 id="interpretable-b-spline-kan">Interpretable B-Spline KAN</h3>
+<p>To maintain predictive transparency without reverting to strict linear assumptions, we deployed a genuine <a rel="external" href="https://en.wikipedia.org/wiki/B-spline">B-spline</a> <a rel="external" href="https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Arnold_representation_theorem">Kolmogorov–Arnold Network</a> (order-3 splines + <a rel="external" href="https://en.wikipedia.org/wiki/Swish_function">SiLU</a> residual), which optimizes learnable univariate functions along each network edge. This allows each first-layer connection to be characterized as an inspectable 1-D response curve: $f(\text{Grantham distance})$. Models were optimized using <a rel="external" href="https://arxiv.org/abs/1412.6980">Adam</a>, $L_1$ spline regularization, and <a rel="external" href="https://en.wikipedia.org/wiki/Early_stopping">early stopping</a> on pinned random seeds to ensure numerical reproducibility. Feature importance is calculated as the standard deviation of each position's partial contribution evaluated strictly over the observed data distribution to avoid extrapolation artifacts.</p>
+<span class="media-anchor" data-media="16" id="anchor-16"></span>
+<div class="media-block" id="media-16">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/benchmark.png" alt="benchmark">
+</div>
+<p>The <a rel="external" href="https://en.wikipedia.org/wiki/B-spline">B-spline</a> KAN implementation was validated on a synthetic additive function, recovering known functional forms and yielding an $R^2 \approx 0.99$. When applied to the empirical datasets, the KAN achieved predictive performance that tracked closely to <a rel="external" href="https://en.wikipedia.org/wiki/Gradient_boosting">gradient boosting</a>, trailing by a small but stable margin under matched-fold <a rel="external" href="https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29">cross-validation</a> (<a href="#Cross-Validated-$R^2$-and-Rigorous-Error-Bounds">Section 3.2</a>). The learned per-position response curves across both datasets are predominantly monotone-decreasing with respect to <a rel="external" href="https://doi.org/10.1126/science.185.4154.862">Grantham</a> distance, indicating that increasing physicochemical divergence maps directly to decreases in cross-titer (greater immune escape).</p>
+<h3 id="capturing-epistasis-a-second-order-kan">Capturing Epistasis: A Second-Order KAN</h3>
+<p>A comparison between depth-1 (additive) and depth-6 tree models indicates that a notable portion of the predictive signal depends on interaction effects, or <a rel="external" href="https://en.wikipedia.org/wiki/Epistasis">epistasis</a>. To capture these interactions within an interpretable framework, we extended the KAN to second order by incorporating bivariate tensor-product spline surfaces, $g(x_i, x_j)$, across an interaction pool composed of the causal parents and top predictive positions. Group-sparsity penalties were applied to prune inactive pairs systematically. Cross-validation was nested relative to pool selection, ensuring that interaction pools were selected strictly within training folds to prevent data leakage.</p>
+<p>To verify whether pairwise terms sufficiently capture the non-linear signal, we computed an interaction-order ladder across tree models of increasing depth:</p>
+<span class="media-anchor" data-media="17" id="anchor-17"></span>
+<div class="media-block" id="media-17">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataset</th>
+      <th>KAN 1st-order</th>
+      <th>KAN 2nd-order</th>
+      <th>KAN 2nd (±SD)</th>
+      <th>2nd folds</th>
+      <th>XGBoost (20-fold)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>vhid_HA1</td>
+      <td>0.820</td>
+      <td>0.851</td>
+      <td>±0.010</td>
+      <td>5</td>
+      <td>0.845</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>H3N2</td>
+      <td>0.585</td>
+      <td>0.613</td>
+      <td>±0.018</td>
+      <td>5</td>
+      <td>0.613</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<span class="media-anchor" data-media="18" id="anchor-18"></span>
+<div class="media-block" id="media-18">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>≤1-way (depth 1)</th>
+      <th>≤2-way (depth 2)</th>
+      <th>≤3-way (depth 3)</th>
+      <th>≤4-way (depth 4)</th>
+      <th>≤6-way (depth 6)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>vhid_HA1</th>
+      <td>0.735</td>
+      <td>0.808</td>
+      <td>0.838</td>
+      <td>0.853</td>
+      <td>0.858</td>
+    </tr>
+    <tr>
+      <th>H3N2</th>
+      <td>0.473</td>
+      <td>0.553</td>
+      <td>0.590</td>
+      <td>0.616</td>
+      <td>0.632</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<p>The structural dynamics diverge between the two panels:</p>
+<ul>
+<li>On VHID, the interaction signal is primarily pairwise. The transition from additive to pairwise terms yields a major performance gain (+0.073), whereas higher-order interactions (3-way through 6-way) contribute a smaller cumulative increase (+0.050).</li>
+<li>On Bedford, pairwise interactions account for roughly half of the non-linear signal. The pairwise increment (+0.080) is closely matched by the cumulative higher-order contribution (+0.079). This indicates that higher-order <a rel="external" href="https://en.wikipedia.org/wiki/Epistasis">epistatic</a> complexes are prominent in the Bedford dataset.</li>
+</ul>
+<p>While a third-order KAN could theoretically map these higher-order relationships, the exponential expansion of the parameter space reduces model interpretability. We treat the second-order KAN as a pragmatic baseline that visualizes the pairwise component. Evaluating the optimized tensor-product surfaces reveals clear biophysical patterns: synergistic escape regions (where co-occurring substitutions reduce titer beyond their additive expectations) and compensatory interaction surfaces.</p>
+<h4 id="formal-verification-of-epistatic-pairs">Formal Verification of Epistatic Pairs</h4>
+<p>To formally cross-examine the top KAN-nominated interactions, we fitted standard <a rel="external" href="https://en.wikipedia.org/wiki/Ordinary_least_squares">OLS</a> interaction terms ($x_a \cdot x_b$) with <a rel="external" href="https://en.wikipedia.org/wiki/Heteroskedasticity-consistent_standard_errors">HC3</a> robust standard errors, applying <a rel="external" href="https://en.wikipedia.org/wiki/False_discovery_rate">Benjamini–Hochberg</a> (BH) correction alongside a non-parametric <a rel="external" href="https://en.wikipedia.org/wiki/Distance_correlation">distance-correlation</a> test:</p>
+<ul>
+<li><strong>Statistical Significance:</strong> 10 out of 16 top KAN-nominated interaction pairs (4/8 in VHID; 6/8 in Bedford) demonstrate statistically significant linear interactions ($q &lt; 0.05$). The estimated coefficients are small but precisely bounded ($\vert{}\beta\vert{} \approx 10^{-4}\text{--}10^{-3} \log_2\text{-titer}$ per <a rel="external" href="https://doi.org/10.1126/science.185.4154.862">Grantham</a> unit squared).</li>
+<li><strong>Structural Norms vs. Classical Significance:</strong> KAN interaction norms do not systematically correlate with standard linear $p$-values; the KAN optimizes overall surface curvature rather than isolated multiplicative parameters. Thus, tensor surfaces serve primarily as an interpretability asset rather than formal inferential tests.</li>
+</ul>
+<span class="media-anchor" data-media="19" id="anchor-19"></span>
+<div class="media-block" id="media-19">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/figure-09.png" alt="figure 09">
+</div>
+<h3 id="cross-method-convergence">Cross-Method Convergence</h3>
+<p>We evaluated the alignment of our causal feature selection (<a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> frequency $\ge 0.5$) against three distinct association screens: top-15 KAN features, top-15 <a rel="external" href="https://en.wikipedia.org/wiki/XGBoost">XGBoost</a> features (by gain), and top-15 univariate associations (by $R^2$).</p>
+<p>Because the three association metrics are computed over identical feature spaces, they function as correlated screens rather than independent lines of evidence. Mutual alignment represents a multi-perspective validation of structural relevance rather than independent replication. In the Bedford panel, the <a rel="external" href="https://en.wikipedia.org/wiki/Causal_inference">causal discovery</a> input was pre-screened using target association (filtering 123 loci to 60), meaning the univariate screen is mechanically related to the causal search input; the VHID panel (71 loci, unscreened) does not share this dependency.</p>
+<p>Positions that consistently converge across all four independent and correlated screens represent our strongest candidate drivers:</p>
+<span class="media-anchor" data-media="20" id="anchor-20"></span>
+<div class="media-block" id="media-20">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/convergence.png" alt="convergence">
+</div>
+<h4 id="summary-of-convergent-driver-positions">Summary of Convergent Driver Positions</h4>
+<ul>
+<li><strong>VHID:</strong> Mature positions 156 and 189 (both represent singleton linkage blocks with <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> frequencies $\approx 1.0$).</li>
+<li><strong>Bedford:</strong> Mature positions 133, 158, and 189 (each maps to a single residue).
+These positions map directly to classical HA head antigenic sites flanking the receptor-binding domain (Site A for 133; Site B for 156, 158, and 189). Features flagged by predictive models that show low causal <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> stability indicate predictive correlates rather than direct causes.</li>
+</ul>
+<h4 id="functional-glycosylation-profiling">Functional Glycosylation Profiling</h4>
+<p>Since our per-position features utilize a symmetric encoding (evaluating changes at an isolated column), the model cannot explicitly represent the gain or loss of <a rel="external" href="https://en.wikipedia.org/wiki/N-linked_glycosylation">N-linked glycosylation</a> sequons ($\text{N-X-S/T}$ motifs, where $\text{X} \neq \text{P}$), which require a three-residue window. To incorporate this context, we mapped the convergent positions back to consensus HA1 sequences:</p>
+<ul>
+<li><strong>Sequon Mapping:</strong> Among the primary convergent drivers, only Bedford mature position 133 forms the root of an active sequon ($\text{N-G-T}$ motif). Positions 156, 158, and 189 do not disrupt or form sequons across the consensus profiles.</li>
+<li><strong>Lineage Differences:</strong> Position 144 carries an active sequon in the Bedford consensus profile but is absent in the VHID consensus. This highlights an encoding boundary: a driver call at a sequon-associated position indicates that column-specific variations track with titer shifts. However, the true physical mechanism may operate via glycan shielding rather than direct epitope contact.</li>
+</ul>
+<h4 id="non-linear-verification-of-omitted-features">Non-linear Verification of Omitted Features</h4>
+<p>The primary causal selection loop relies on the <a rel="external" href="https://en.wikipedia.org/wiki/Fisher_transformation">Fisher-Z</a> conditional independence test, which detects linear <a rel="external" href="https://en.wikipedia.org/wiki/Partial_correlation">partial correlations</a>. To verify whether functional features with purely non-linear dependencies were discarded, we re-tested positions flagged by $\ge 3$ predictive screens that exhibited low causal frequencies (Pattern-A positions) using the non-parametric <a rel="external" href="https://arxiv.org/abs/1202.3775">Kernel Conditional Independence</a> (<a rel="external" href="https://arxiv.org/abs/1202.3775">KCI</a>) test. We evaluated the null hypothesis:
+$$H_0: P \perp \text{HI_titer} \mid \text{Discovered Parents}$$</p>
+<p>The results are summarized below (reporting the median $p$-values across 3 independent seeded runs on 1,000-row subsamples):</p>
+<ul>
+<li><strong>Pattern-A Validation:</strong> Both VHID position 145 and Bedford position 159 exhibit structural independence under linear assumptions but demonstrate strong conditional dependence under the non-parametric <a rel="external" href="https://arxiv.org/abs/1202.3775">KCI</a> test. This alignment with curved KAN response splines identifies them as non-linear driver candidates that the linear causal framework omits.</li>
+<li><strong>Full Pipeline Scalability Limits:</strong> Running a complete constraint-based discovery search with <a rel="external" href="https://arxiv.org/abs/1202.3775">KCI</a> substituted for <a rel="external" href="https://en.wikipedia.org/wiki/Fisher_transformation">Fisher-Z</a> proved computationally intractable on the available infrastructure, exceeding a hard 180-second per-dataset execution threshold. Consequently, the global structural graphs remain conditional on the assumptions of the linear <a rel="external" href="https://en.wikipedia.org/wiki/Fisher_transformation">Fisher-Z</a> test, which are validated for size control (<a href="#Calibration-of-the-Fisher-Z-Test-Under-Permutation-Nulls">Section 3.3.2</a>) but may omit purely non-linear structures.</li>
+</ul>
+<span class="media-anchor" data-media="21" id="anchor-21"></span>
+<div class="media-block" id="media-21">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataset</th>
+      <th>screen_k</th>
+      <th>n_kci_rows</th>
+      <th>seconds</th>
+      <th>status</th>
+      <th>n_fisherz</th>
+      <th>n_kci</th>
+      <th>fisherz_parents</th>
+      <th>kci_parents</th>
+      <th>only_under_kci</th>
+      <th>only_under_fisherz</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>vhid_HA1</td>
+      <td>25</td>
+      <td>1000</td>
+      <td>180.2</td>
+      <td>killed (&gt; 180s — KCI-PC intractable at this sc...</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>pos144;pos156;pos158;pos189</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>H3N2</td>
+      <td>25</td>
+      <td>1000</td>
+      <td>180.2</td>
+      <td>killed (&gt; 180s — KCI-PC intractable at this sc...</td>
+      <td>7</td>
+      <td>NaN</td>
+      <td>pos11;pos143;pos167;pos168;pos199;pos200;pos288</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<h4 id="cross-dataset-replication-of-the-discovered-structure">Cross-dataset replication of the discovered structure</h4>
+<p>We evaluated the structural replication between the VHID and Bedford datasets by mapping discovered loci to shared mature H3 positions and calculating <a rel="external" href="https://en.wikipedia.org/wiki/Jaccard_index">Jaccard</a> similarity metrics against a 20,000-draw <a rel="external" href="https://en.wikipedia.org/wiki/Permutation_test">permutation</a> null:</p>
+<table><thead><tr><th>set</th><th style="text-align: right">observed J</th><th>shared positions</th><th style="text-align: right">null mean</th><th style="text-align: right">p</th></tr></thead><tbody>
+<tr><td>PC</td><td style="text-align: right">0.167</td><td><strong>158, 189</strong></td><td style="text-align: right">0.035</td><td style="text-align: right">0.062</td></tr>
+<tr><td>GES</td><td style="text-align: right">0.182</td><td>133, 276</td><td style="text-align: right">0.035</td><td style="text-align: right">0.051</td></tr>
+<tr><td>Bootstrap (freq≥0.5)</td><td style="text-align: right">0.182</td><td><strong>158, 189</strong></td><td style="text-align: right">0.034</td><td style="text-align: right"><strong>0.047</strong></td></tr>
+</tbody></table>
+<p>The structural overlap exceeds chance expectations across all sets, demonstrating stable structural replication. However, the specific positions driving this replication depend on the algorithm: constraint-based <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Constraint-based%20causal%20discovery%20methods/PC.html">PC</a> and the <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> selection replicate positions 158 and 189 (<a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> $p=0.047$), whereas score-based <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Score-based%20causal%20discovery%20methods/GES.html">GES</a> localizes its cross-dataset intersection at positions 133 and 276.</p>
+<span class="media-anchor" data-media="22" id="anchor-22"></span>
+<div class="media-block" id="media-22">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/figure-11.png" alt="figure 11">
+</div>
+<h3 id="backdoor-adjusted-effect-sizes">Backdoor-Adjusted Effect Sizes</h3>
+<p>If the target variable operates as a pure causal sink, the remaining selected parents could serve as a valid backdoor adjustment set to isolate a position's specific interventional effect. However, the <a rel="external" href="https://en.wikipedia.org/wiki/Bayesian_network">d-separation</a> goodness-of-fit test rejects the simple sink-star structure due to dense parent-parent adjacencies. This indicates that conditioning on co-parents can introduce confounding via unmodeled mediators or colliders. We therefore interpret these estimates as partial regression coefficients rather than as identified causal effects.</p>
+<span class="media-anchor" data-media="23" id="anchor-23"></span>
+<div class="media-block" id="media-23">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataset</th>
+      <th>position</th>
+      <th>boot_freq</th>
+      <th>tier</th>
+      <th>adj_effect</th>
+      <th>ci_lo</th>
+      <th>ci_hi</th>
+      <th>marginal_effect</th>
+      <th>block_size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>vhid_HA1</td>
+      <td>144</td>
+      <td>0.505</td>
+      <td>moderate</td>
+      <td>-0.0113</td>
+      <td>-0.0129</td>
+      <td>-0.0096</td>
+      <td>-0.0194</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>vhid_HA1</td>
+      <td>156</td>
+      <td>1.000</td>
+      <td>high</td>
+      <td>-0.0134</td>
+      <td>-0.0170</td>
+      <td>-0.0098</td>
+      <td>-0.0633</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>vhid_HA1</td>
+      <td>158</td>
+      <td>0.950</td>
+      <td>high</td>
+      <td>-0.0166</td>
+      <td>-0.0189</td>
+      <td>-0.0142</td>
+      <td>-0.0385</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>vhid_HA1</td>
+      <td>189</td>
+      <td>1.000</td>
+      <td>high</td>
+      <td>-0.0340</td>
+      <td>-0.0358</td>
+      <td>-0.0320</td>
+      <td>-0.0420</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>vhid_HA1</td>
+      <td>289</td>
+      <td>0.955</td>
+      <td>high</td>
+      <td>0.0239</td>
+      <td>0.0166</td>
+      <td>0.0311</td>
+      <td>0.0424</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>H3N2</td>
+      <td>11</td>
+      <td>1.000</td>
+      <td>high</td>
+      <td>-0.0091</td>
+      <td>-0.0113</td>
+      <td>-0.0068</td>
+      <td>-0.0276</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>H3N2</td>
+      <td>143</td>
+      <td>1.000</td>
+      <td>high</td>
+      <td>-0.0112</td>
+      <td>-0.0149</td>
+      <td>-0.0074</td>
+      <td>-0.0430</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>H3N2</td>
+      <td>167</td>
+      <td>1.000</td>
+      <td>high</td>
+      <td>-0.0021</td>
+      <td>-0.0030</td>
+      <td>-0.0010</td>
+      <td>-0.0143</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>H3N2</td>
+      <td>168</td>
+      <td>1.000</td>
+      <td>high</td>
+      <td>-0.0068</td>
+      <td>-0.0087</td>
+      <td>-0.0049</td>
+      <td>-0.0279</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>H3N2</td>
+      <td>199</td>
+      <td>1.000</td>
+      <td>high</td>
+      <td>-0.0142</td>
+      <td>-0.0158</td>
+      <td>-0.0127</td>
+      <td>-0.0287</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>H3N2</td>
+      <td>200</td>
+      <td>0.650</td>
+      <td>moderate</td>
+      <td>-0.0062</td>
+      <td>-0.0076</td>
+      <td>-0.0049</td>
+      <td>-0.0207</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>H3N2</td>
+      <td>203</td>
+      <td>0.995</td>
+      <td>high</td>
+      <td>-0.0022</td>
+      <td>-0.0029</td>
+      <td>-0.0015</td>
+      <td>-0.0060</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>H3N2</td>
+      <td>288</td>
+      <td>0.815</td>
+      <td>moderate</td>
+      <td>-0.0096</td>
+      <td>-0.0109</td>
+      <td>-0.0083</td>
+      <td>-0.0234</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<span class="media-anchor" data-media="24" id="anchor-24"></span>
+<div class="media-block" id="media-24">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/effect_sizes.png" alt="effect sizes">
+</div>
+<p>The partial-regression coefficients were estimated using <a rel="external" href="https://en.wikipedia.org/wiki/Ordinary_least_squares">ordinary least squares</a>, controlling for the co-parent set, paired with <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> 95% confidence intervals:</p>
+<ul>
+<li><strong>Systematic Shrinkage:</strong> All adjusted effect sizes exhibit systematic shrinkage toward zero relative to their unadjusted marginal associations. This pattern is consistent with mitigating phylogenetic confounding, though it remains structurally confounded by internal parent dependencies.</li>
+<li><strong>Sign Consistency:</strong> No feature displayed a sign reversal upon adjustment; all 13 primary candidates (5 in VHID, 8 in Bedford) maintained stable directional signs across both marginal and adjusted models.</li>
+<li><strong>Directional Dynamics:</strong> The majority of estimated effects are negative, meaning larger physicochemical divergence maps to a lower $\log_2$ titer (greater immune escape). Position 289 (VHID) is a notable exception, showing a positive adjusted coefficient ($+0.024$). This indicates that larger substitutions at position 289 track with increases in cross-titer, consistent with a structural stabilization role rather than direct antibody evasion.</li>
+</ul>
+<h4 id="driver-versus-hitchhiker-differentiation">Driver versus Hitchhiker Differentiation.</h4>
+<p>To separate functional drivers from passenger mutations, we mapped <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> selection frequencies against backdoor-adjusted effect sizes:</p>
+<ul>
+<li><strong>True Drivers (High Selection Stability + Substantial Effect Size):</strong> Positions 158, 189, and 289 in VHID; positions 2, 133, and 189 in Bedford.</li>
+<li><strong>Stable Hitchhikers (High Selection Stability + Marginal Adjusted Effect Size):</strong> Position 156 in VHID maintains a selection frequency of 1.0 but displays a minimal, non-robust effect size, indicating it is a passenger mutation tightly linked to functional drivers. Position 144 in VHID exhibits high effect variability, rendering its selection unstable.</li>
+</ul>
+<span class="media-anchor" data-media="25" id="anchor-25"></span>
+<div class="media-block" id="media-25">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/figure-13.png" alt="figure 13">
+</div>
+<h3 id="left-censoring-sensitivity-analysis">Left-Censoring Sensitivity Analysis</h3>
+<p>The target variable is bounded by a <a rel="external" href="https://en.wikipedia.org/wiki/Censoring_%28statistics%29">left-censoring</a> floor representing the assay's lower detection limit (undetectable titers $&lt;10$ are encoded at a floor value of 5.0). This affects 493 pairs ($\le 10$) in VHID and 616 pairs in Bedford. Because these values concentrate in high-antigenic-distance regimes (52% of top-quartile <a rel="external" href="https://doi.org/10.1126/science.185.4154.862">Grantham</a> pairs in VHID are censored vs. 0% in the bottom quartile; <a rel="external" href="https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test">Mann–Whitney</a> $p &lt; 10^{-100}$), we evaluated whether effect rankings are artifacts of censoring configurations.</p>
+<p>We recomputed the adjusted effects under three sensitivity states: (a) as shipped, (b) dropping all censored rows, and (c) recoding the floor value to 10.0. The estimated signs and overall performance ranks remained stable across all states. The only adjustments were single-step rank swaps among the lowest-impact positions (e.g., VHID 144$\leftrightarrow$156). At the same time, the primary convergent drivers (133, 158, 189) maintained stable parameters, confirming that <a rel="external" href="https://en.wikipedia.org/wiki/Censoring_%28statistics%29">left-censoring</a> does not systematically bias our classifications of primary drivers.</p>
+<span class="media-anchor" data-media="26" id="anchor-26"></span>
+<div class="media-block" id="media-26">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/figure-14.png" alt="figure 14">
+</div>
+<h4 id="token-level-attribution-and-structural-identifiability">Token-Level Attribution and Structural Identifiability</h4>
+<p>To transition from overall population-level effects to token-level (per-pair) credit attribution, we executed an identifiability audit:</p>
+<ul>
+<li><strong>Structural Block Resolution:</strong> Because linkage collapse groups collinear positions prior to <a rel="external" href="https://en.wikipedia.org/wiki/Causal_inference">causal discovery</a>, each selected driver represents an independent linkage block. There is no block-level confounding between selected drivers.</li>
+<li><strong>Natural Experiments:</strong> Among virus-reference pairs that vary at $\ge 1$ driver, 35–36% qualify as single-driver natural experiments (655 pairs in VHID; 1395 in Bedford), where the sequence differs at exactly one driver block. Bedford position 193 (629 single-mismatch pairs) and VHID position 158 (255 pairs) represent major clear contrasts for prospective experimental validation. The remaining 64% are multi-block pairs requiring block-level resolution.</li>
+<li><strong>Counterfactual Stability Mapping:</strong> Evaluating a leave-one-difference-out ensemble across <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> refits confirms that primary drivers maintain stable token-level credit boundaries. Consistent with our population-level analysis, VHID position 156 displays highly unstable token credit (sign consistency 0.58), confirming its characterization as a passenger mutation.</li>
+</ul>
+<span class="media-anchor" data-media="27" id="anchor-27"></span>
+<div class="media-block" id="media-27">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/figure-15.png" alt="figure 15">
+</div>
+<span class="media-anchor" data-media="28" id="anchor-28"></span>
+<div class="media-block" id="media-28">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/figure-16.png" alt="figure 16">
+</div>
+<h3 id="validating-the-causal-structure">Validating the Causal Structure</h3>
+<p>To evaluate the structural validity of the discovered titer-sink graph, we performed three complementary macro-validation tests:</p>
+<ol>
+<li><strong>Global Goodness-of-Fit (Shipley's <a rel="external" href="https://en.wikipedia.org/wiki/Bayesian_network">d-Separation</a> Test):</strong> Evaluates whether the implied conditional independence constraints are valid across the empirical joint distribution.</li>
+<li><strong>Linkage-Group Bootstrap Stability:</strong> Measures the structural reproducibility of edges when the entire selection pipeline is executed over independent data resamples.</li>
+<li><strong>Direct Effect Bounds:</strong> Quantifies the variance of the adjusted partial-regression coefficients.</li>
+</ol>
+<span class="media-anchor" data-media="29" id="anchor-29"></span>
+<div class="media-block" id="media-29">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>group</th>
+      <th>bootstrap_freq</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>G144</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>G158</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>G189</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>G156</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>G289</td>
+      <td>0.995</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<span class="media-anchor" data-media="30" id="anchor-30"></span>
+<div class="media-block" id="media-30">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>group</th>
+      <th>bootstrap_freq</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>G143</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>G203</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>G199</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>G11</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>G288</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>G200</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>G168</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>G167</td>
+      <td>0.965</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<p>The global goodness-of-fit test <strong>systematically rejects</strong> the simplified sink-star structure across both datasets ($p &lt; 0.05$). This rejection occurs because the graph does not account for residual parent-parent dependencies arising from shared phylogenetic history.
+Crucially, this does not invalidate the identification of the target's primary parent set; rather, it indicates that the graph functions as a localized feature-selection model for direct target parents rather than a complete generative model of the sequence-population structure. The linkage-group <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> stability scores approach 1.0 for the primary epitope groups, demonstrating that the identities of these driver blocks are highly reproducible under resampling.</p>
+<h3 id="continuous-per-position-encoding-and-the-titer-markov-blanket">Continuous Per-Position Encoding and the Titer Markov Blanket</h3>
+<p>To evaluate whether preserving substitution magnitude impacts structural discovery, we executed an independent replication of the structural workflow on the VHID dataset using a continuous encoding scheme. This modification aligns with three structural revisions:</p>
+<ol>
+<li><strong>Continuous Feature Space:</strong> Positions are encoded as the continuous scalar $L_2$ norm of the z-standardized 12-property mutation vector, preserving mutation scale while collapsing property dimensions.</li>
+<li><strong>Target Reframing:</strong> The primary deliverable is the target's <a rel="external" href="https://en.wikipedia.org/wiki/Markov_blanket">Markov blanket</a> (adjacency) rather than directed parent sets, since edges into a pure sink cannot be uniquely oriented by conditional independence alone.</li>
+<li><strong>Algorithmic Path:</strong> Linkage collapse was performed using continuous <a rel="external" href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient">Pearson</a> correlation ($\vert{}r\vert{} \ge 0.8$), followed by screened <a rel="external" href="https://en.wikipedia.org/wiki/Fisher_transformation">Fisher-Z</a> <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Constraint-based%20causal%20discovery%20methods/FCI.html">FCI</a> discovery, cross-checked against the <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Constraint-based%20causal%20discovery%20methods/PC.html">PC</a> and <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Permutation-based%20causal%20discovery%20methods/BOSS.html">BOSS</a> algorithms over a 200-resample <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a>.</li>
+</ol>
+<h4 id="physicochemical-scalar-mapping">Physicochemical Scalar Mapping</h4>
+<p>We validated the continuous 12-property $L_2$ scalar against standard <a rel="external" href="https://doi.org/10.1126/science.185.4154.862">Grantham</a> distances across the active alignment columns. The continuous metrics display high correlation while maintaining enhanced precision regarding residue-specific volume and charge trajectories.</p>
+<span class="media-anchor" data-media="31" id="anchor-31"></span>
+<div class="media-block" id="media-31">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/figure-17.png" alt="figure 17">
+</div>
+<h4 id="continuous-markov-blanket-analysis">Continuous Markov Blanket Analysis</h4>
+<p>The continuous pipeline over the VHID dataset ($n=2751$) yields a High Confidence <a rel="external" href="https://en.wikipedia.org/wiki/Markov_blanket">Markov blanket</a> encompassing positions {156, 189, 278, 289}.</p>
+<p>Comparing this with our binary results reveals a stable core: positions 156, 189, and 289 maintain high confidence across both encodings (e.g., position 289 yields a binary stability of 0.955 and a continuous stability of 0.960). The encodings diverge at two points: position 158 (High Confidence under binary flags) drops to unstable ($0.490$) under the continuous metric. In contrast, position 278 (Site C) is promoted from low binary stability ($0.40$) to high continuous stability ($0.970$). This divergence indicates that certain positions operate as binary switches, while others depend on the specific physicochemical distance of the substitution.</p>
+<span class="media-anchor" data-media="32" id="anchor-32"></span>
+<div class="media-block" id="media-32">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>method</th>
+      <th>threshold</th>
+      <th>ci_test</th>
+      <th>alpha</th>
+      <th>titer_adjacency</th>
+      <th>titer_parents_caveated</th>
+      <th>n_adjacent</th>
+      <th>wall_seconds</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>FCI_fisherz_screened</td>
+      <td>0.8</td>
+      <td>fisherz</td>
+      <td>0.01</td>
+      <td>pos_133;pos_156;pos_189;pos_190;pos_278;pos_289</td>
+      <td>pos_189;pos_190;pos_278</td>
+      <td>6</td>
+      <td>12.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>PC_fisherz_screened</td>
+      <td>0.8</td>
+      <td>fisherz</td>
+      <td>0.01</td>
+      <td>pos_133;pos_156;pos_189;pos_190;pos_278;pos_289</td>
+      <td>pos_156;pos_189;pos_190;pos_278;pos_289</td>
+      <td>6</td>
+      <td>6.1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>BOSS_BIC_screened</td>
+      <td>0.8</td>
+      <td>BIC_score</td>
+      <td>NaN</td>
+      <td>pos_53;pos_62;pos_83;pos_94;pos_135;pos_155;po...</td>
+      <td>pos_53;pos_62;pos_83;pos_94;pos_135;pos_155;po...</td>
+      <td>15</td>
+      <td>47.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<span class="media-anchor" data-media="33" id="anchor-33"></span>
+<div class="media-block" id="media-33">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/figure-18.png" alt="figure 18">
+</div>
+<span class="media-anchor" data-media="34" id="anchor-34"></span>
+<div class="media-block" id="media-34">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>locus</th>
+      <th>position</th>
+      <th>adjacency_selection_freq</th>
+      <th>tier</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>pos_189</td>
+      <td>189</td>
+      <td>1.000</td>
+      <td>HIGH</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>pos_278</td>
+      <td>278</td>
+      <td>0.970</td>
+      <td>HIGH</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>pos_289</td>
+      <td>289</td>
+      <td>0.960</td>
+      <td>HIGH</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>pos_156</td>
+      <td>156</td>
+      <td>0.905</td>
+      <td>HIGH</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>pos_133</td>
+      <td>133</td>
+      <td>0.860</td>
+      <td>MOD</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>pos_158</td>
+      <td>158</td>
+      <td>0.490</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>pos_190</td>
+      <td>190</td>
+      <td>0.390</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>pos_126</td>
+      <td>126</td>
+      <td>0.350</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>pos_157</td>
+      <td>157</td>
+      <td>0.165</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>pos_262</td>
+      <td>262</td>
+      <td>0.165</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>pos_193</td>
+      <td>193</td>
+      <td>0.150</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>pos_106</td>
+      <td>106</td>
+      <td>0.075</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>pos_79</td>
+      <td>79</td>
+      <td>0.060</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>pos_44</td>
+      <td>44</td>
+      <td>0.050</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>pos_159</td>
+      <td>159</td>
+      <td>0.035</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>pos_307</td>
+      <td>307</td>
+      <td>0.015</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>pos_163</td>
+      <td>163</td>
+      <td>0.015</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>pos_260</td>
+      <td>260</td>
+      <td>0.015</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>pos_248</td>
+      <td>248</td>
+      <td>0.015</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>pos_244</td>
+      <td>244</td>
+      <td>0.015</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>pos_173</td>
+      <td>173</td>
+      <td>0.015</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>pos_2</td>
+      <td>2</td>
+      <td>0.015</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>pos_160</td>
+      <td>160</td>
+      <td>0.015</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>pos_144</td>
+      <td>144</td>
+      <td>0.015</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>pos_143</td>
+      <td>143</td>
+      <td>0.015</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>pos_137</td>
+      <td>137</td>
+      <td>0.015</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>pos_135</td>
+      <td>135</td>
+      <td>0.015</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>pos_175</td>
+      <td>175</td>
+      <td>0.005</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>pos_310</td>
+      <td>310</td>
+      <td>0.005</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>pos_261</td>
+      <td>261</td>
+      <td>0.005</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>pos_62</td>
+      <td>62</td>
+      <td>0.005</td>
+      <td>UNSTABLE</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>pos_276</td>
+      <td>276</td>
+      <td>0.005</td>
+      <td>UNSTABLE</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<h4 id="encoding-sensitivity-analysis">Encoding Sensitivity Analysis</h4>
+<p>Rerunning <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/search_methods_index/Constraint-based%20causal%20discovery%20methods/PC.html">PC</a> target-adjacency searches across binary, <a rel="external" href="https://doi.org/10.1126/science.185.4154.862">Grantham</a>, and continuous $L_2$ encodings on the VHID panel confirms that positions 144, 156, 189, and 289 are robust across all three frameworks (pairwise <a rel="external" href="https://en.wikipedia.org/wiki/Jaccard_index">Jaccard</a> similarities $0.50\text{--}0.63$).</p>
+<p>Exploratory analysis mapping individual property dimensions shows that because single amino acid substitutions modify all 12 property axes simultaneously, individual properties are structurally non-identifiable (<a rel="external" href="https://en.wikipedia.org/wiki/Partial_correlation">partial correlations</a> collapse to zero when conditioning axes on one another). Marginal correlations can rank which axis covaries most strongly with titer shifts (e.g., hydrogen-bond-acceptor properties at position 158; $\beta$-sheet preferences at position 189), but these cannot be interpreted as isolated causal effects.</p>
+<span class="media-anchor" data-media="35" id="anchor-35"></span>
+<div class="media-block" id="media-35">
+<img src="https://sriram98v.github.io/claude-science-hackathon/media/figures/figure-19.png" alt="figure 19">
+</div>
+<h2 id="conclusion">Conclusion</h2>
+<p>By integrating target-oriented <a rel="external" href="https://en.wikipedia.org/wiki/Causal_inference">causal discovery</a> with interpretable machine learning, this study establishes a structural framework to separate HA positions that drive antigenic escape from linked passenger mutations. Evaluated strictly on <a rel="external" href="https://en.wikipedia.org/wiki/Hemagglutination_assay">hemagglutination-inhibition</a> data without structural or structural epitope priors, the pipeline maps its highest-confidence selections to classical HA head antigenic sites, rediscovering residues implicated in immune evasion across both H3N2 datasets.
+The primary convergent core—encompassing mature positions 156 and 189 in VHID, and 133, 158, and 189 in Bedford—localizes to antigenic site B (flanking the receptor-binding domain) and site A. Position 189 is documented as a primary determinant of H3N2 cluster transitions; recovering this signal directly from observational titers indicates that the feature selection maps to verified antigenic mechanisms rather than dataset-specific artifacts.</p>
+<p>Our validation battery highlights the structural boundaries of observational serology. Rejection of the simplified sink-star graph in global <a rel="external" href="https://en.wikipedia.org/wiki/Bayesian_network">d-separation</a> tests indicates that, while the pipeline isolates immediate target parents, it does not capture the dense network of phylogenetic dependencies among them. Consequently, adjusted effect sizes represent partial-regression coefficients rather than fully identified causal parameters.</p>
+<p>Furthermore, our framework demonstrates that selection stability does not inherently imply functional causality; passenger mutations tightly linked to functional loci can achieve high <a rel="external" href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29">bootstrap</a> frequencies. This is illustrated by position 156 in the VHID dataset, which displays high selection frequency alongside small, non-robust effect sizes, characterizing it as a stable hitchhiker.</p>
+<p>Phylogenetic linkage imposes physical limits on the resolution of individual residues in observational datasets. This is pronounced in the Bedford H3N2 panel, where the largest co-evolving linkage blocks encompass 88 and 55 positions, binding multiple head residues into single covarying units that cannot be resolved without interventional data.
+Additionally, raw HI titers integrate multiple biophysical phenotypes, conflating head-epitope antibody binding with variations in receptor-binding avidity and unmodeled glycosylation structures. Because avidity-associated residues (including 145, 189, and 193) overlap our parent sets, individual residue attributions remain mechanistically complex under a raw-titer target.</p>
+<p>These constraints guide the evaluation of sequence-to-antigenic maps for prospective surveillance. Grouped <a rel="external" href="https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29">cross-validation</a> establishes realistic generalization boundaries: when forecasting titers against entirely unseen reference antisera, median predictive performance settles at $R^2 \approx 0.615$ for VHID and $\approx 0.498$ for Bedford, down from random-split baselines near $0.85$. Furthermore, temporal transport analysis indicates that forward-in-time predictions can become unstable when viral evolution crosses major cluster boundaries that are absent from the training data.</p>
+<p>In conclusion, this pipeline provides a transparent, self-auditing framework that maps its own structural limits. While observational data can isolate co-evolving blocks and prioritize candidate drivers, resolving individual-residue causality within dense lineages requires integration with prospective <a rel="external" href="https://en.wikipedia.org/wiki/Reverse_genetics">reverse genetics</a>, deep mutational scanning escape maps, and structurally isolated serological assays.</p>
+<h2 id="references">References</h2>
+<ol>
+<li><strong>Smith, D. J., Lapedes, A. S., de Jong, J. C., Bestebroer, T. M., Rimmelzwaan,
+G. F., Osterhaus, A. D. M. E., Fouchier, R. A. M.</strong> (2004). <a rel="external" href="https://doi.org/10.1126/science.1097211">Mapping the antigenic
+and genetic evolution of influenza virus</a>.
+<em>Science</em> <strong>305</strong>(5682), 371–376.</li>
+<li><strong>Bedford, T., Suchard, M. A., Lemey, P., Dudas, G., Gregory, V., Hay, A. J.,
+McCauley, J. W., Russell, C. A., Smith, D. J., Rambaut, A.</strong> (2014). <a rel="external" href="https://doi.org/10.7554/eLife.01914">Integrating
+influenza antigenic dynamics with molecular evolution</a>.
+<em>eLife</em> <strong>3</strong>, e01914.</li>
+<li><strong>Du, E., Zhong, Z., Wang, P., et al.</strong> (2023). <a rel="external" href="https://arxiv.org/abs/2302.00926">DPCIPI: A pre-trained deep learning
+model for predicting cross-immunity between drifted strains of Influenza
+A/H3N2</a>. <em>arXiv:2302.00926.</em></li>
+<li><strong>Grantham, R.</strong> (1974). <a rel="external" href="https://doi.org/10.1126/science.185.4154.862">Amino acid difference formula to help explain protein
+evolution</a>. <em>Science</em> <strong>185</strong>(4154),
+862–864.</li>
+<li><strong>Spirtes, P., Glymour, C., Scheines, R.</strong> (2000). <a rel="external" href="https://doi.org/10.7551/mitpress/1754.001.0001"><em>Causation, Prediction, and
+Search</em> (2nd ed.)</a>. MIT Press.
+(PC algorithm.)</li>
+<li><strong>Chickering, D. M.</strong> (2002). <a rel="external" href="https://www.jmlr.org/papers/v3/chickering02b.html">Optimal structure identification with greedy
+search</a>. <em>Journal of Machine
+Learning Research</em> <strong>3</strong>, 507–554. (GES.)</li>
+<li><strong>Zhang, J.</strong> (2008). <a rel="external" href="https://doi.org/10.1016/j.artint.2008.08.001">On the completeness of orientation rules for causal discovery
+in the presence of latent confounders and selection
+bias</a>. <em>Artificial Intelligence</em>
+<strong>172</strong>(16–17), 1873–1896. (FCI.)</li>
+<li><strong>Liu, Z., Wang, Y., Vaidya, S., et al.</strong> (2024). <a rel="external" href="https://arxiv.org/abs/2404.19756">KAN: Kolmogorov–Arnold
+Networks</a>. <em>arXiv:2404.19756.</em></li>
+<li><strong>Pearl, J.</strong> (2009). <a rel="external" href="https://doi.org/10.1017/CBO9780511803161"><em>Causality: Models, Reasoning, and Inference</em> (2nd
+ed.)</a>. Cambridge University Press.
+(Backdoor adjustment / do-calculus.)</li>
+<li><strong>Chen, T., Guestrin, C.</strong> (2016). <a rel="external" href="https://doi.org/10.1145/2939672.2939785">XGBoost: A scalable tree boosting
+system</a>. <em>KDD 2016</em>, 785–794.</li>
+<li><strong>Koel, B. F., Burke, D. F., Bestebroer, T. M., van der Vliet, S., Zondag, G. C. M.,
+Vervaet, G., Skepner, E., Lewis, N. S., Spronken, M. I. J., Russell, C. A., Eropkin,
+M. Y., Hurt, A. C., Barr, I. G., de Jong, J. C., Rimmelzwaan, G. F., Osterhaus, A. D.
+M. E., Fouchier, R. A. M., Smith, D. J.</strong> (2013). <a rel="external" href="https://doi.org/10.1126/science.1244730">Substitutions near the receptor
+binding site determine major antigenic change during influenza virus
+evolution</a>. <em>Science</em> <strong>342</strong>(6161),
+976–979.</li>
+<li><strong>Neher, R. A., Bedford, T., Daniels, R. S., Russell, C. A., Shraiman, B. I.</strong> (2016).
+<a rel="external" href="https://doi.org/10.1073/pnas.1525578113">Prediction, dynamics, and visualization of antigenic phenotypes of seasonal influenza
+viruses</a>. <em>Proceedings of the National
+Academy of Sciences</em> <strong>113</strong>(12), E1701–E1709.</li>
+<li><strong>Łuksza, M., Lässig, M.</strong> (2014). <a rel="external" href="https://doi.org/10.1038/nature13087">A predictive fitness model for
+influenza</a>. <em>Nature</em> <strong>507</strong>(7490), 57–61.</li>
+<li><strong>Harvey, W. T., Benton, D. J., Gregory, V., Hall, J. P. J., Daniels, R. S., Bedford,
+T., Haydon, D. T., Hay, A. J., McCauley, J. W., Reeve, R.</strong> (2016). <a rel="external" href="https://doi.org/10.1371/journal.ppat.1005526">Identification of
+low- and high-impact hemagglutinin amino acid substitutions that drive antigenic drift
+of influenza A(H3N2) viruses</a>. <em>PLoS
+Pathogens</em> <strong>12</strong>(4), e1005526.</li>
+<li><strong>Wiley, D. C., Wilson, I. A., Skehel, J. J.</strong> (1981). <a rel="external" href="https://doi.org/10.1038/289373a0">Structural identification of the
+antibody-binding sites of Hong Kong influenza haemagglutinin and their involvement in
+antigenic variation</a>. <em>Nature</em> <strong>289</strong>(5796),
+373–378.</li>
+<li><strong>Caton, A. J., Brownlee, G. G., Yewdell, J. W., Gerhard, W.</strong> (1982). <a rel="external" href="https://doi.org/10.1016/0092-8674%2882%2990135-0">The antigenic
+structure of the influenza virus A/PR/8/34 hemagglutinin (H1
+subtype)</a>. <em>Cell</em> <strong>31</strong>(2),
+417–427.</li>
+<li><strong>Doud, M. B., Lee, J. M., Bloom, J. D.</strong> (2018). <a rel="external" href="https://doi.org/10.1038/s41467-018-03665-3">How single mutations affect viral
+escape from broad and narrow antibodies to H1 influenza
+hemagglutinin</a>. <em>Nature
+Communications</em> <strong>9</strong>, 1386.</li>
+<li><strong>Lee, J. M., Eguia, R., Zost, S. J., Choudhary, S., Wilson, P. C., Bedford, T.,
+Stevens-Ayers, T., Boeckh, M., Hurt, A. C., Lakdawala, S. S., Hensley, S. E., Bloom,
+J. D.</strong> (2019). <a rel="external" href="https://doi.org/10.7554/eLife.49324">Mapping person-to-person variation in viral mutations that escape
+polyclonal serum targeting influenza hemagglutinin</a>.
+<em>eLife</em> <strong>8</strong>, e49324.</li>
+<li><strong>Lou, Y., Caruana, R., Gehrke, J., Hooker, G.</strong> (2013). <a rel="external" href="https://doi.org/10.1145/2487575.2487579">Accurate intelligible models
+with pairwise interactions</a>. <em>KDD 2013</em>,
+623–631.</li>
+<li><strong>Hensley, S. E., Das, S. R., Bailey, A. L., Schmidt, L. M., Hickman, H. D., Jayaraman, A.,
+Viswanathan, K., Raman, R., Sasisekharan, R., Bennink, J. R., Yewdell, J. W.</strong> (2009).
+<a rel="external" href="https://doi.org/10.1126/science.1178258">Hemagglutinin receptor binding avidity drives influenza A virus antigenic
+drift</a>. <em>Science</em> <strong>326</strong>(5930), 734–736.</li>
+</ol>
+<hr />
+<p><em>Data: <a rel="external" href="https://zenodo.org/records/21339272"><code>influenza-hi-antigenic-distance</code></a>
+repository (CC-BY-4.0). Code and this notebook are
+released alongside it. Causal discovery uses the <a rel="external" href="https://causal-learn.readthedocs.io/en/latest/"><code>causal-learn</code></a>
+library; the KAN is a
+custom PyTorch implementation in <code>src/bspline_kan.py</code>. The full pipeline — linkage
+collapse, causal discovery, B-spline KAN, and cross-method convergence — is packaged
+as the reusable <code>kan-causal-antigenic-workflow</code> skill.</em></p>
+
+        </div>
+
+        <footer class="site"><div class="inner">
+          <span class="badge">Built with Claude &mdash; Life Sciences</span><br>
+          Created with Claude Science for the
+          <a href="https://cerebralvalley.ai/e/built-with-claude-life-sciences">Built with Claude: Life Sciences</a>
+          hackathon. Code released under the MIT License; data under CC-BY-4.0.
+          &nbsp;&middot;&nbsp; <a href="https://sriram98v.github.io/claude-science-hackathon/full.html">View the full executed notebook (with code) &rarr;</a>
+        </div></footer>
+      </div>
+    </div>
+
+    <div id="col-media" aria-label="Figures and tables"></div>
+  </div>
+
+  <button id="scroll-top" aria-label="Scroll to top" title="Scroll to top">&#8593;</button>
+
+  <div id="lightbox" aria-hidden="true"><img alt="Enlarged figure"></div>
+
+  <script src="https://sriram98v.github.io/claude-science-hackathon/js/reader.js"></script>
+
+  <!-- Links to a different host open in a new tab; internal nav (get_url renders it as an
+       absolute same-host URL) and #anchors stay in the current tab. -->
+  <script>
+    (function () {
+      document.querySelectorAll('a[href]').forEach(function (a) {
+        try {
+          var u = new URL(a.href, location.href);
+          if (u.host && u.host !== location.host) {
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+          }
+        } catch (e) {}
+      });
+    })();
+  </script>
+
+  <!-- MathJax renders the article's TeX ($…$ inline, $$…$$ display). It loads async,
+       AFTER the per-page script above has already assigned heading ids from the raw
+       heading text, so the "$R^2$" heading keeps its id and cross-reference anchors. -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>
